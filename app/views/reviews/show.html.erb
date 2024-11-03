@@ -1,0 +1,68 @@
+<div class="mx-7">
+  <div>
+    <%= link_to "Wróć", :back %>
+  </div>
+  <div>
+    <div class="my-3 text-xl">
+      <h3>
+        <%= @review.user.username%> on  <%=date(@review.created_at)%>
+      </h3>
+    </div>
+    <div class="text-center text-4xl">
+      <h2>
+        <%= @review.title%> - <%= @review.avg_review_rating %>
+      </h2>
+    </div>
+  </div>
+  <div>
+    <div class="border-t my-5">
+      <div class="flex text-center justify-evenly mt-2">
+        <% @review.rating_dictionary.each do |category, rating| %>
+          <div class="">
+            <div class="">
+              <%= category %>
+            </div>
+            <div class="">
+              <%= rating %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p>
+      <%= @review.content%>
+    </p>
+  </div>
+  <div class="border col-span-12 p-3 my-9">
+    <div>
+      <div class="mt-4">
+        <%= form_with(model:[@venue,@review,@comment]) do |f| %>
+          <%= f.label "Skomentuj:" %>
+          <%= f.text_field :content %><br/>
+          <div class=" py-1 px-3 block">
+            <%= f.submit %>
+          </div>
+        <% end %>
+      </div>
+      <div class="border-2 mt-3 px-3 py-2 divide-y-2 ">
+        <% for comment in @review.comments%>
+          <div class="py-4">
+            <div class="float  ">
+              <div>
+                <%= comment.user.username%> (<%=comment.comment_user_avg_rating%>):
+              </div>
+              <div class="px-3 mt-2 italic">
+                <%= comment.content%>
+              </div>
+              <%if current_user == comment.user %>
+                <%=button_to "Usuń", venue_review_comment_path(@venue, @review, comment), method: :delete, class: "mt-2 text-red-700"%>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

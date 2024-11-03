@@ -1,0 +1,2 @@
+module VenueQuestionsHelper
+end

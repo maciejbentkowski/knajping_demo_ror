@@ -1,0 +1,51 @@
+<div class="mt-5 mx-10">
+  <div class="grid grid-cols-4 gap-7">
+    <div class="col-span-3">
+      <div class="grid grid-cols-12 gap-6">
+        <% @venues.each do |venue| %>
+          <div class="col-span-12">
+            <div class="rounded-lg dark:bg-surface-dark border-2 min-h-64">
+              <div class="grid grid-cols-12 gap-1">
+                <div class="col-span-5">
+                  <div class="relative bg-cover bg-no-repeat">
+                    <img class="rounded-t-lg" src={{ venue.primary_image.url }} alt="" />
+                    <a href="{% url 'venues:detail' venue.id %}">
+                      <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100">
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-span-7">
+                  <div class="p-6 text-surface">
+                    <h3 class="mb-2 text-xl font-medium leading-tight">
+                      <%= link_to venue.name, venue_path(venue) %>
+                    </h3>
+                    <div>
+                      Categories:
+                      <% for category in venue.categories%>
+                        <%= category.name %>
+                      <% end%>
+                    </div>
+                    <div>
+                      Rating:
+                      <%= venue.avg_venue_rating%> in <%=venue.reviews.count%> Reviews
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div id="menu" class="col-span-1  max-h-96 border">
+      <div class="">
+        <div class="m-2">
+          <div>
+            Search console
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

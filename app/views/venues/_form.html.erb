@@ -1,0 +1,25 @@
+<div class="grid grid-cols-7 mt-5 ">
+  <div class="col-start-3 col-span-3 pl-4 py-4 rounded shadow border px-5 ">
+    <div>
+      <%= form_with(model: venue) do |form| %>
+        <div>
+          <%= form.label :name %>
+          <%= form.text_field :name %>
+        </div>
+        <% if action_name == 'edit'%>
+          <div>
+            <%= form.label :is_active %>
+            <%= form.check_box :is_active %>
+          </div>
+        <% else %>
+          <div class="text-xs">
+            <p>Po stworzeniu swojego lokalu, będzie on widoczny tylko dla Ciebie. Można go aktywować w opcji Edytuj</p>
+          </div>
+        <% end%>
+        <div>
+          <%= form.submit %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,151 @@
+<div class="grid grid-cols-12 gap-4 mt-4 mx-10">
+  <div class="col-span-6 border p-2">
+    <div>
+      <h2 class="text-2xl">
+        <% if @venue.reviews.count != 0 %>
+          <%= @venue.name %> (<%= @venue.avg_venue_rating%> / 6.0)
+        <% else %>
+          <%= @venue.name %>
+          <div class="text-xs">
+            Oceń jako pierwszy
+          </div>
+        <% end %>
+      </h2>
+      <div>
+        <% if user_signed_in? %>
+          <button type="button" class="border bg-slate-500 hover:bg-slate-400 text-black my-4 rounded">
+            <%=link_to "Oceń", new_venue_review_path(@venue), class: "py-1 px-3 block" %>
+          </button>
+        <% end %>
+      </div>
+      <div class="mt-2">
+        <p>Categories:</p>
+        <% for category in @venue.categories %>
+          <div class="text-xs ">
+            <%=category.name%>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="mt-1 pl-2 col-span-6">
+    <div>
+      Photos
+    </div>
+  </div>
+  <div class="col-span-12 p-3">
+    <div class="text-lg mb-5">
+      <h3>
+        Recenzje:
+      </h3>
+    </div>
+    <% if @venue.reviews.count == 0 %>
+      <div class="text-center">
+        <p class="text-xl">
+          Brak recenzji
+        </p>
+      </div>
+    <%end%>
+    <% for review in @venue.reviews %>
+      <div class="mx-7 mb-10 border p-4">
+        <div class="float-end ">
+          <div class="flex ">
+            <%=review.comments.count %> <img src="<%= asset_path('comment.svg') %>" class="max-w-4 mx-1" alt="Your SVG">
+          </div>
+        </div>
+        <div class="mb-2 text-xl">
+          <%= review.user.username %> - <%=link_to review.title, venue_review_path(@venue, review) %>  (<%=review.avg_review_rating%> / 6) 
+        </div>
+        <div class="my-4 px-3">
+          <p class="text-sm leading-4 text-pretty line-clamp-4 indent-2">
+            <%= review.content %>
+          </p>
+        </div>
+        <div class="border-t">
+          <div class="flex text-center justify-evenly mt-2">
+            <% review.rating_dictionary.each do |category, rating| %>
+              <div class="">
+                <div class="">
+                  <%= category %>
+                </div>
+                <div class="">
+                  <%= rating %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-span-12 p-3">
+    <div>
+      <div>
+        <%if user_signed_in? %>
+          <div class="mt-4">
+            <%= form_with(model:[@venue,@question]) do |f| %>
+              <div class="my-4">
+                <%= f.label "Pytania o lokal:", class: "text-lg mb-5" %>
+              </div>
+              <div>
+                <%= f.text_field :question, class:"w-1/2" %>
+              </div>
+              <div class=" py-2 block">
+                <%= f.submit "Zapytaj" %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <div>
+        <% for question in @questions %>
+          <div class="border mt-3 px-3 py-2">
+            <div>
+              <%=datetime(question.created_at)%> <%= question.user.username %>:            </div>
+            <div class=" mt-2 italic">
+              <%= question.question%>
+            </div>
+            <% if current_user == question.user %>
+              <%=button_to "Usuń", venue_question_path(@venue, question), method: :delete, class: "mt-2 text-red-700"%>
+            <% end %>
+            <div class="border-2 mt-3 px-3 py-2">
+              <div class="mt-4">
+                <%= form_with(model:[@venue, question, @answer]) do |f| %>
+                  <%= f.label "Odpowiedz:" %>
+                  <%= f.text_field :content %><br/>
+                  <div class=" py-1 px-3 block">
+                    <%= f.submit %>
+                  </div>
+                <% end %>
+              </div>
+              <div class="divide-y-2">
+                <% for answer in question.answers%>
+                  <div class="my-4">
+                    <div class="mt-2">
+                      <%=datetime(answer.created_at)%>  <%= answer.user.username %>:
+                    </div>
+                    <div class="grid grid-cols-4">
+                      <div class="col-span-3 mt-2 italic pl-5">
+                        <%= answer.content%>
+                      </div>
+                      <div class="col-span-1 text-center">
+                        <div>
+                          Edytuj
+                        </div>
+                        <div>
+                          <%if current_user == answer.user %>
+                            <%=button_to "Usuń", venue_question_answer_path(@venue, answer.question, answer), method: :delete, class: "mt-2 text-red-700"%>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
