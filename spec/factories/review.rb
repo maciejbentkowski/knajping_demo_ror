@@ -4,6 +4,5 @@ FactoryBot.define do
       association :user
       sequence(:title) { |n| "Sample Title #{n}" }
       sequence(:content) { |n| "Sample Content#{n}" }
-
     end
   end

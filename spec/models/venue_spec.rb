@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Venue, type: :model do
-
   describe "validations" do
     let(:venue) { build(:venue) }
     context "name validations" do
@@ -41,17 +40,15 @@ RSpec.describe Venue, type: :model do
   let(:venue) { create(:venue) }
 
     context 'when there are no reviews' do
-
       it 'returns 0.0' do
         expect(venue.avg_venue_rating).to eq(0.0)
       end
     end
     context 'when there are reviews' do
-
       before do
         review1 = create(:review, venue: venue)
         review2 = create(:review, venue: venue)
-  
+
         create(:rating, review: review1, atmosphere_rating: 4, availability_rating: 3, quality_rating: 4, service_rating: 4, uniqueness_rating: 3, value_rating: 4)
         create(:rating, review: review2, atmosphere_rating: 3, availability_rating: 4, quality_rating: 4, service_rating: 3, uniqueness_rating: 4, value_rating: 4)
       end

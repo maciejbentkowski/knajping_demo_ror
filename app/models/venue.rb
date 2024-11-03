@@ -13,7 +13,7 @@ class Venue < ApplicationRecord
 
     scope :active, -> { where(is_active: true) }
     scope :inactive, -> { where(is_active: false) }
-    
+
     def avg_venue_rating
         total = 0
         self.reviews.each do |review|

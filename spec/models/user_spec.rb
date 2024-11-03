@@ -27,13 +27,13 @@ RSpec.describe User, type: :model do
         let!(:user1) { create(:user, username: 'User1') }
         let!(:user2) { create(:user, username: 'User2') }
         let!(:user3) { create(:user, username: 'User3') }
-    
+
         before do
           create_list(:review, 3, user: user1)
           create_list(:review, 5, user: user2) # user2 has the most reviews
           create_list(:review, 2, user: user3)
         end
-    
+
         it 'returns the user with the most reviews' do
           expect(User.best_reviewer).to eq("User2 with 5 reviews")
         end

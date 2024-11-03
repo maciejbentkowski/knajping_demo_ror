@@ -35,7 +35,7 @@ class Rating < ApplicationRecord
     validates :review_id, presence: true
 
     def avg_rating
-        ratings = [atmosphere_rating, availability_rating, quality_rating, service_rating, uniqueness_rating, value_rating]
+        ratings = [ atmosphere_rating, availability_rating, quality_rating, service_rating, uniqueness_rating, value_rating ]
         ratings.compact.sum.to_f / ratings.compact.size
       end
 end
