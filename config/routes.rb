@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     registrations: "users/registrations"
   }
+
   resources :venues do
+    member do
+      delete :remove_photo
+    end
     resources :questions, only: [ :create, :destroy ] do
       resources :answers, only: [ :create, :destroy ]
     end

@@ -36,6 +36,17 @@
     <div>
       Photos
     </div>
+    <div>
+      <% if @venue.photos.attached? %>
+        <div class="grid grid-cols-2">
+          <% @venue.photos.each do |photo| %>
+            <div class="relative bg-cover bg-no-repeat p-2">
+              <%= image_tag(photo.variant(resize_to_fill:[300, 250]).processed, class: "mx-auto object-cover") %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
   <div class="col-span-12 p-3">
     <div class="text-lg mb-5">

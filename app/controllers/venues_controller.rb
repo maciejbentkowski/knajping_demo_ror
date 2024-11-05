@@ -23,7 +23,8 @@ class VenuesController < ApplicationController
     if @venue.save
       redirect_to venues_path
     else
-      render :new, status: :unprocessable_entity
+      flash[:alert] = @venue.errors[:photos].any? ? @venue.errors[:photos].join(", ") : "There was an error creating the venue."
+      redirect_to new_venue_path
     end
   end
 
@@ -33,9 +34,11 @@ class VenuesController < ApplicationController
 
   def update
     if @venue.update(venue_params)
-      redirect_to @venue
+      redirect_to edit_venue_path(@venue)
+      flash[:notice] = "Lokal został pomyślnie zaktualizowany"
     else
-      render :edit, status: :unprocessable_entity
+      flash[:alert] = @venue.errors[:photos].any? ? @venue.errors[:photos].join(", ") : "There was an error updating the venue."
+      redirect_to edit_venue_path(@venue)
     end
   end
 
@@ -45,9 +48,13 @@ class VenuesController < ApplicationController
     redirect_to :profile
   end
 
+  def remove_photo
+    photo = ActiveStorage::Attachment.find(params[:photo_id])
+    photo.purge_later
+    redirect_to(edit_venue_path(@venue))
+  end
 
   private
-
   def set_venue
     @venue = Venue.find(params[:id])
   end
@@ -57,7 +64,7 @@ class VenuesController < ApplicationController
   end
 
   def venue_params
-    params.require(:venue).permit(:name, :is_active, :user_id, :primary_photo, category_ids: [])
+    params.require(:venue).permit(:name, :is_active, :user_id, :primary_photo, photos: [], category_ids: [])
   end
 
   def check_if_user_owns_venue

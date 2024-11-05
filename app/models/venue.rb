@@ -8,6 +8,9 @@ class Venue < ApplicationRecord
     has_many :questions, dependent: :destroy
 
     has_one_attached :primary_photo
+    has_many_attached :photos
+    validate :photos_limit
+
 
     validates :name, presence: true
     validates :is_active, inclusion: { in: [ true, false ] }
@@ -25,6 +28,14 @@ class Venue < ApplicationRecord
             0.00
         else
             ((total / self.reviews.count).to_f).round(2)
+        end
+    end
+
+    private
+
+    def photos_limit
+        if photos.attached? && photos.count > 4
+          errors.add(:photos, "Mozesz dodać maksymalnie 4 zdjęcia.")
         end
     end
 end
