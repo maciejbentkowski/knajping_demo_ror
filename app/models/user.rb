@@ -19,6 +19,5 @@ class User < ApplicationRecord
 
   def self.best_reviewer
     user = User.all.max_by { |user| user.reviews.count }
-    "#{user.username} with #{user.reviews.count} reviews"
   end
 end

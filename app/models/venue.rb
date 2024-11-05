@@ -31,6 +31,20 @@ class Venue < ApplicationRecord
         end
     end
 
+    def self.most_reviewed
+        Venue.find_by(id: Review.group(:venue_id).count.max_by { |k, v| v }[0])
+    end
+
+    def self.best_rated_venue
+        venue_id_with_highest_avg_rating = Rating.joins(:review)
+                                                 .group("reviews.venue_id")
+                                                 .average("(atmosphere_rating + availability_rating + quality_rating + service_rating + uniqueness_rating + value_rating) / 6.0")
+                                                 .max_by { |_, avg| avg }
+                                                 &.first
+        Venue.find_by(id: venue_id_with_highest_avg_rating)
+    end
+
+
     private
 
     def photos_limit

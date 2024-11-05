@@ -1,5 +1,51 @@
-<div>
-  <h1 class="font-bold text-4xl">Pages#index</h1>
-  <p>Find me in app/views/pages/index.html.erb</p>
-  <%=@best_reviewer%>
+<div class="flex flex-col items-center min-h-screen bg-gray-100 py-8">
+  <div class="w-full max-w-4xl p-8 bg-white rounded-lg shadow-md mb-8">
+    <h1 class="text-4xl font-bold text-center text-gray-800 mb-4">Witamy w Knajpingu!</h1>
+    <p class="text-center text-gray-600 text-lg">
+      Odkryj najlepsze restauracje w okolicy, zobacz recenzje od innych użytkowników i podziel się swoją opinią!
+      Dołącz już dziś, aby zacząć tworzyć recenzje i oceny.
+    </p>
+  </div>
+  <div class="w-full max-w-4xl p-6 bg-white rounded-lg shadow-md mb-8">
+    <h2 class="text-2xl font-semibold text-gray-800">Najlepiej oceniany knajpa</h2>
+    <div class="mt-4">
+      <% if @best_rated_venue %>
+        <p class="text-lg font-medium text-gray-700">Nazwa knajpy: <%= @best_rated_venue.name %></p>
+        <p class="text-gray-600">Liczba recenzji: <%= @best_rated_venue.reviews.count %></p>
+        <p class="text-gray-600">Średnia ocena: <%= @best_rated_venue.avg_venue_rating %> / 6.0</p>
+      <% else %>
+        <p class="text-gray-600">Jeszcze nie ma restauracji do wyświetlenia.</p>
+      <% end %>
+    </div>
+  </div>
+  <div class="w-full max-w-4xl p-6 bg-white rounded-lg shadow-md mb-8">
+    <h2 class="text-2xl font-semibold text-gray-800">Najlepszy recenzent</h2>
+    <div class="mt-4">
+      <% if @top_reviewer %>
+        <p class="text-lg font-medium text-gray-700">Użytkownik: <%= @top_reviewer.username %></p>
+        <p class="text-gray-600">Liczba recenzji: <%= @top_reviewer.reviews.count %></p>
+      <% else %>
+        <p class="text-gray-600">Jeszcze nie ma recenzji do wyświetlenia.</p>
+      <% end %>
+    </div>
+  </div>
+  <div class="w-full max-w-4xl p-6 bg-white rounded-lg shadow-md mb-8">
+    <h2 class="text-2xl font-semibold text-gray-800">Najczęściej recenzowana knajpa</h2>
+    <div class="mt-4">
+      <% if @most_reviewed_venue %>
+        <p class="text-lg font-medium text-gray-700">Nazwa knajpy: <%= @most_reviewed_venue.name %></p>
+        <p class="text-gray-600">Liczba recenzji: <%= @most_reviewed_venue.reviews.count %></p>
+        <p class="text-gray-600">Średnia ocena: <%= @most_reviewed_venue.avg_venue_rating %> / 6.0</p>
+      <% else %>
+        <p class="text-gray-600">Jeszcze nie ma lokali do wyświetlenia.</p>
+      <% end %>
+    </div>
+  </div>
+  <div class="w-full max-w-4xl p-8 bg-indigo-600 rounded-lg shadow-md text-black text-center">
+    <h2 class="text-2xl font-bold mb-4">Dołącz do nas!</h2>
+    <p class="mb-6">Stwórz konto już teraz, aby dzielić się swoimi doświadczeniami z innymi i pomóc innym w wyborze najlepszych lokali!</p>
+    <div class="mt-4">
+      <%= link_to "Załóż konto", new_user_registration_path, class: "px-6 py-2 bg-white text-indigo-600 rounded-lg font-semibold hover:bg-indigo-50" %>
+    </div>
+  </div>
 </div>

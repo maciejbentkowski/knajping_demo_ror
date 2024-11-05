@@ -35,7 +35,7 @@ RSpec.describe User, type: :model do
         end
 
         it 'returns the user with the most reviews' do
-          expect(User.best_reviewer).to eq("User2 with 5 reviews")
+          expect(User.best_reviewer).to eq(user2)
         end
       end
 end

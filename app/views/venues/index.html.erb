@@ -4,7 +4,7 @@
       <div class="grid grid-cols-12 gap-6">
         <% @venues.each do |venue| %>
           <div class="col-span-12">
-            <div class="rounded-lg dark:bg-surface-dark border-2 min-h-64">
+            <div class="rounded-lg dark:bg-surface-dark border min-h-64">
               <div class="grid grid-cols-12">
                 <div class="col-span-5">
                   <div class="relative bg-cover bg-no-repeat p-3">
@@ -36,7 +36,8 @@
         <% end %>
       </div>
     </div>
-    <div id="menu" class="col-span-1  max-h-96 border">
+    <%#
+      <div id="menu" class="col-span-1  max-h-96 border">
       <div class="">
         <div class="m-2">
           <div>
@@ -45,5 +46,6 @@
         </div>
       </div>
     </div>
+    %>
   </div>
 </div>
