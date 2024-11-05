@@ -5,7 +5,6 @@ RSpec.describe Venue, type: :model do
     let(:venue) { build(:venue) }
     context "name validations" do
     it { should validate_presence_of(:name) }
-    it { should validate_uniqueness_of(:name) }
     end
     context "user_id Validations" do
       it { should validate_presence_of(:user_id) }

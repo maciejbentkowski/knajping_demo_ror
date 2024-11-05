@@ -7,7 +7,9 @@ class Venue < ApplicationRecord
 
     has_many :questions, dependent: :destroy
 
-    validates :name, presence: true, uniqueness: true
+    has_one_attached :primary_photo
+
+    validates :name, presence: true
     validates :is_active, inclusion: { in: [ true, false ] }
     validates :user_id, presence: true
 

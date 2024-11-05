@@ -5,14 +5,12 @@
         <% @venues.each do |venue| %>
           <div class="col-span-12">
             <div class="rounded-lg dark:bg-surface-dark border-2 min-h-64">
-              <div class="grid grid-cols-12 gap-1">
+              <div class="grid grid-cols-12">
                 <div class="col-span-5">
-                  <div class="relative bg-cover bg-no-repeat">
-                    <img class="rounded-t-lg" src={{ venue.primary_image.url }} alt="" />
-                    <a href="{% url 'venues:detail' venue.id %}">
-                      <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100">
-                      </div>
-                    </a>
+                  <div class="relative bg-cover bg-no-repeat p-3">
+                    <%= check_primary_photo(venue)%>
+                    <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100">
+                    </div>
                   </div>
                 </div>
                 <div class="col-span-7">

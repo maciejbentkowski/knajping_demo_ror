@@ -4,9 +4,8 @@ class PagesController < ApplicationController
   end
   def about
   end
-
   def profile
-    @user = current_user
+    @user = User.find(params[:id])
     @user_venues = Venue.where(user_id: @user.id)
   end
 end

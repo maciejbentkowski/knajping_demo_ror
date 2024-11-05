@@ -1,22 +1,39 @@
 <div class="grid grid-cols-7 mt-5 ">
-  <div class="col-start-3 col-span-3 pl-4 py-4 rounded shadow border px-5 ">
+  <div class="col-start-3 col-span-3 pl-4 py-4 rounded px-5 ">
     <div>
       <%= form_with(model: venue) do |form| %>
-        <div>
-          <%= form.label :name %>
+        <div class="my-3">
+          <%= form.label :name, "Nazwa" %>
           <%= form.text_field :name %>
         </div>
         <% if action_name == 'edit'%>
-          <div>
-            <%= form.label :is_active %>
+          <div class="field my-3">
+            <%= form.label :primary_photo %>
+            <%= form.file_field :primary_photo %>
+          </div>
+          <div class="my-3">
+            <%= form.label :is_active, "Czy Twój lokal jest aktywny?" %>
             <%= form.check_box :is_active %>
+          </div>
+          <div class= "border p-5 my-3 ">
+            <div class= "text-center mb-3">
+              Kategorie:
+            </div>
+            <div class="grid grid-cols-2">
+              <% Category.all.each do |category| %>
+                <div>
+                  <%= check_box_tag 'venue[category_ids][]', category.id, @venue.category_ids.include?(category.id) %>
+                  <%= label_tag "venue_category_ids_#{category.id}", category.name %>
+                </div>
+              <% end %>
+            </div>
           </div>
         <% else %>
           <div class="text-xs">
-            <p>Po stworzeniu swojego lokalu, będzie on widoczny tylko dla Ciebie. Można go aktywować w opcji Edytuj</p>
+            <p>Po stworzeniu swojego lokalu, będzie on widoczny tylko dla Ciebie. Aktywuj go w swoim profilu</p>
           </div>
         <% end%>
-        <div>
+        <div class="my-3">
           <%= form.submit %>
         </div>
       <% end %>

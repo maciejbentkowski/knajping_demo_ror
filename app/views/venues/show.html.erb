@@ -1,7 +1,7 @@
 <div class="grid grid-cols-12 gap-4 mt-4 mx-10">
   <div class="col-span-6 border p-2">
     <div>
-      <h2 class="text-2xl">
+      <div class="text-2xl">
         <% if @venue.reviews.count != 0 %>
           <%= @venue.name %> (<%= @venue.avg_venue_rating%> / 6.0)
         <% else %>
@@ -10,18 +10,22 @@
             Oceń jako pierwszy
           </div>
         <% end %>
-      </h2>
-      <div>
+      </div>
+      <div class="flex">
         <% if user_signed_in? %>
           <button type="button" class="border bg-slate-500 hover:bg-slate-400 text-black my-4 rounded">
             <%=link_to "Oceń", new_venue_review_path(@venue), class: "py-1 px-3 block" %>
           </button>
         <% end %>
       </div>
-      <div class="mt-2">
-        <p>Categories:</p>
+      <div>
+        <div class="relative bg-cover bg-no-repeat p-3">
+          <%= check_primary_photo(@venue)%>
+        </div>
+      </div>
+      <div class="mt-2 flex divide-x-2">
         <% for category in @venue.categories %>
-          <div class="text-xs ">
+          <div class="text-sm px-2">
             <%=category.name%>
           </div>
         <% end %>

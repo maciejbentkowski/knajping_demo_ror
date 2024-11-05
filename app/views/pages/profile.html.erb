@@ -5,7 +5,7 @@
         <%= check_avatar(@user)%>
       </div>
     </div>
-    <div class="text-center">
+    <div class="text-center py-4">
       <div>
         <ul>
           <li>
@@ -18,28 +18,36 @@
       </div>
       <div class="mt-2">
         <ul>
-          <li>
-            <%=link_to "Edytuj konto", edit_user_registration_path %>
-          </li>
+          <% if @user == current_user %>
+            <li>
+              <%=link_to "Edytuj konto", edit_user_registration_path %>
+            </li>
+          <% end %>
         </ul>
       </div>
     </div>
   </div>
   <div class=" pl-3 pb-3 max-h-96 col-span-8  overflow-y-auto ">
     <div class ="pt-3 mb-4">
-      <h2 class=" text-2xl border-b">Moje lokale</h2>
+      <h2 class=" text-2xl border-b">
+        Moje lokale
+      </h2>
     </div>
-    <div class="">
-      <ul class="">
+    <div class=" ">
+      <ul class="divide-y border ">
         <% @user_venues.each do |venue| %>
-          <li class="flex pt-2 place-items-center min-w-8  border pl-2">
+          <li class="flex pt-2 place-items-center min-h-16 min-w-8 pl-2">
             <div class="min-w-8 w-1/4">
               <%=link_to venue.name, venue_path(venue)%>
               <div>
                 <% if venue.is_active %>
-                  <p class="text-xs text-green-300">(Aktywny)</p>
+                  <p class="text-xs text-green-300">
+                    (Aktywny)
+                  </p>
                 <% else %>
-                  <p class="text-xs text-red-300">(Nieaktywny)</p>
+                  <p class="text-xs text-red-300">
+                    (Nieaktywny)
+                  </p>
                 <% end %>
               </div>
             </div>
@@ -47,17 +55,19 @@
               Rating: <%=venue.avg_venue_rating%>
             </div>
             <div class="flex ml-auto mx-2 ">
-              <div class="">
-                <button type="button" class="bg-blue-600 hover:bg-blue-500 text-white my-4 rounded">
-                  <%=link_to "Edytuj" , edit_venue_path(venue), :class => "py-1 px-3 block" %>
-                </button>
-              </div>
-              <div>
-                <%= button_to 'Delete' , venue_path(venue), form_class: "py-1 px-3 block bg-red-600 hover:bg-red-400 text-white my-4 ml-2 rounded",
+              <% if @user == current_user %>
+                <div class="">
+                  <button type="button" class="bg-blue-600 hover:bg-blue-500 text-white my-4 rounded">
+                    <%=link_to "Edytuj" , edit_venue_path(venue), :class => "py-1 px-3 block" %>
+                  </button>
+                </div>
+                <div>
+                  <%= button_to 'Delete' , venue_path(venue), form_class: "py-1 px-3 block bg-red-600 hover:bg-red-400 text-white my-4 ml-2 rounded",
                                                             method: :delete,
                                                             data: { turbo_method: :delete,
                                                             turbo_confirm: "Are you sure you want to delete this?"} %>
-              </div>
+                </div>
+              <% end %>
             </div>
           </li>
         <% end %>
@@ -74,10 +84,13 @@
           <div class="col-span-6">
             <%= link_to review.venue.name, venue_path(review.venue), class: "italic text-lg"%>
           </div>
-          <div class="col-span-2">Rating: <%=review.avg_review_rating%></div>
+          <div class="col-span-2">
+            Rating: <%=review.avg_review_rating%>
+          </div>
           <div class="col-start-2 text-center col-span-6 flex-col px-3 pb-3 mt-5">
             <div class="text-xl py-2">
-              <%= review.title %>            </div>
+              <%=link_to review.title, venue_review_path(review.venue, review) %>
+            </div>
             <div class="text-xs leading-4 text-pretty line-clamp-3">
               <%= review.content %>
             </div>
@@ -86,4 +99,3 @@
       <% end %>
     </div>
   </div>
-</div>
