@@ -32,16 +32,36 @@ class Venue < ApplicationRecord
     end
 
     def self.most_reviewed
-        Venue.find_by(id: Review.group(:venue_id).count.max_by { |k, v| v }[0])
+        if ActiveRecord::RecordNotFound
+            nil
+        else
+            venue_id_with_most_reviews = Review.group(:venue_id)
+                                               .order("COUNT(venue_id) DESC")
+                                               .limit(1)
+                                               .count
+                                               .keys
+                                               .first
+
+            Venue.find_by(id: venue_id_with_most_reviews)
+        end
     end
 
     def self.best_rated_venue
-        venue_id_with_highest_avg_rating = Rating.joins(:review)
-                                                 .group("reviews.venue_id")
-                                                 .average("(atmosphere_rating + availability_rating + quality_rating + service_rating + uniqueness_rating + value_rating) / 6.0")
-                                                 .max_by { |_, avg| avg }
-                                                 &.first
-        Venue.find_by(id: venue_id_with_highest_avg_rating)
+        if ActiveRecord::RecordNotFound
+            nil
+        else
+            venue_id_with_highest_avg_rating = Rating.joins(:review)
+                                                     .group("reviews.venue_id")
+                                                     .average("(COALESCE(atmosphere_rating, 0) +
+                                                                COALESCE(availability_rating, 0) +
+                                                                COALESCE(quality_rating, 0) +
+                                                                COALESCE(service_rating, 0) +
+                                                                COALESCE(uniqueness_rating, 0) +
+                                                                COALESCE(value_rating, 0)) / 6.0")
+                                                     .max_by { |_, avg| avg }
+                                                     &.first
+            Venue.find_by(id: venue_id_with_highest_avg_rating)
+        end
     end
 
 
