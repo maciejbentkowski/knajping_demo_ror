@@ -1,5 +1,5 @@
-<div class="grid grid-cols-9 mt-5 ">
-  <div class="col-start-2 col-span-7 pl-4 py-4 rounded shadow border px-5 ">
+<div class="grid grid-cols-9 mt-5 border p-8 w-full  bg-white shadow-md rounded-lg dark:bg-surface-dark min-h-64">
+  <div class="col-start-2 col-span-7 pl-4 py-4 rounded">
     <%= form_with model:[venue, review] do |form| %>
       <div>
         <div class>
@@ -19,7 +19,7 @@
       </div>
       <div class="my-9">
         <%= form.fields_for :rating do |ratings_subform| %>
-          <div class="m-3 py-4 border shadow ">
+          <div class="my-3 py-4 border shadow ">
             <div class="text-center pt-2 text-2xl">
               <%= ratings_subform.label :value_rating, "Oceń wartość" %>
             </div>
@@ -35,7 +35,7 @@
               <% end %>
             </div>
           </div>
-          <div class="m-3 py-4 border shadow">
+          <div class="my-3 py-4 border shadow">
             <div class="text-center pt-2 text-2xl">
               <%= ratings_subform.label :service_rating, "Oceń serwis" %>
             </div>
@@ -51,7 +51,7 @@
               <% end %>
             </div>
           </div>
-          <div class="m-3 py-4 border shadow">
+          <div class="my-3 py-4 border shadow">
             <div class="text-center pt-2 text-2xl">
               <%= ratings_subform.label :atmosphere_rating, "Oceń atmosferę" %>
             </div>
@@ -67,7 +67,7 @@
               <% end %>
             </div>
           </div>
-          <div class="m-3 py-4 border shadow">
+          <div class="my-3 py-4 border shadow">
             <div class="text-center pt-2 text-2xl">
               <%= ratings_subform.label :quality_rating, "Oceń jakość" %>
             </div>
@@ -83,7 +83,7 @@
               <% end %>
             </div>
           </div>
-          <div class="m-3 py-4 border shadow">
+          <div class="my-3 py-4 border shadow">
             <div class="text-center pt-2 text-2xl">
               <%= ratings_subform.label :availability_rating, "Oceń dostępność" %>
             </div>
@@ -99,7 +99,7 @@
               <% end %>
             </div>
           </div>
-          <div class="m-3 py-4 border shadow">
+          <div class="my-3 py-4 border shadow">
             <div class="text-center pt-2 text-2xl">
               <%= ratings_subform.label :uniqueness_rating, "Oceń unikalność" %>
             </div>
@@ -117,7 +117,7 @@
           </div>
         <% end %>
       </div>
-      <div>
+      <div class="border shadow my-3 px-6 py-2 bg-white text-indigo-600 rounded-lg font-semibold hover:bg-indigo-50 text-center ">
         <%= form.submit %>
       </div>
     <% end %>

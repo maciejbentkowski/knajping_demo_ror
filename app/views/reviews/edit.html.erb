@@ -1,4 +1,10 @@
-<h2>
-  Edytuj swoją recenzję
-</h2>
-<%= render 'form', {venue: @venue, review: @review} %>
+<div class="flex flex-col items-center min-h-screen bg-gray-100 p-8">
+  <div class="w-full max-w-xs mx-auto text-center mt-5">
+    <div class="text-xl">
+      Edytuj swoją recenzję
+    </div>
+  </div>
+  <div class="">
+    <%= render 'form', {venue: @venue, review: @review} %>
+  </div>
+</div>

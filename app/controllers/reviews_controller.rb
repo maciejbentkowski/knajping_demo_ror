@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
     before_action :set_venue
     before_action :set_review, only: [ :edit, :update ]
-    before_action :authenticate_user!
+    before_action :authenticate_user!, except: [ :show ]
     before_action :check_if_user_is_owner, only: [ :new, :create, :edit, :update ]
 
     def show

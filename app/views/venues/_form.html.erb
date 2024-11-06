@@ -4,11 +4,11 @@
       <div class= "">
         <div class="grid gap-x-8 grid-cols-2">
           <div class= "col-span-1">
-            <div class="my-3 border p-3">
+            <div class="border p-3 my-3 w-full max-w-4xl bg-white shadow-md rounded-lg dark:bg-surface-dark">
               <%= form.label :name, "Nazwa" %>
               <%= form.text_field :name %>
             </div>
-            <div class= "border p-3 my-3 ">
+            <div class= "border p-3 my-3 w-full max-w-4xl bg-white shadow-md rounded-lg dark:bg-surface-dark ">
               <div class= "text-center mb-3">
                 Kategorie:
               </div>
@@ -23,7 +23,7 @@
             </div>
           </div>
           <div class= "col-span-1">
-            <div class="field my-3 border p-3">
+            <div class="field border p-3 my-3 w-full max-w-4xl bg-white shadow-md rounded-lg dark:bg-surface-dark">
               <div class="text-center px-5">
                 <%= form.label :primary_photo, "Zdjęcie Główne" %>
                 <div class=my-5>
@@ -32,7 +32,7 @@
               </div>
               <%= form.file_field :primary_photo %>
             </div>
-            <div class="field my-3 border p-3">
+            <div class="field border p-3 my-3 w-full max-w-4xl bg-white shadow-md rounded-lg dark:bg-surface-dark">
               <div class="text-center mt-2">
                 <%= form.label :photos, "Zdjęcia"%>
                 <div class="text-xs">
@@ -60,7 +60,7 @@
           <div class="text-xs">
             <p>Po stworzeniu swojego lokalu, będzie on widoczny tylko dla Ciebie. Aktywuj go w swoim profilu</p>
           </div>
-          <div class="my-3">
+          <div class="my-3 px-6 py-2 bg-white text-indigo-600 rounded-lg font-semibold hover:bg-indigo-50 text-center">
             <%= form.submit%>
           </div>
         <% else %>
@@ -69,8 +69,8 @@
               <%= form.label :is_active, "Czy Twój lokal jest aktywny?" %>
               <%= form.check_box :is_active %>
             </div>
-            <div class="my-3">
-              <%= form.submit%>
+            <div class="my-3 px-6 py-2 bg-white text-indigo-600 rounded-lg font-semibold hover:bg-indigo-50 text-center ">
+              <%= form.submit %>
             </div>
           </div>
         <% end %>
