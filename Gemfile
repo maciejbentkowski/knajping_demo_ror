@@ -39,6 +39,7 @@ group :development, :test do
 
   gem "factory_bot_rails"
   gem "rspec-rails", "~> 7.0.0"
+  gem "ruby-lsp", require: false
 
   gem "faker"
   gem "htmlbeautifier"

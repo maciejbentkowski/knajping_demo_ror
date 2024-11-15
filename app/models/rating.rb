@@ -34,8 +34,20 @@ class Rating < ApplicationRecord
 
     validates :review_id, presence: true
 
+
+    after_save :update_review_avg_rating
+    after_destroy :update_review_avg_rating
+
+
     def avg_rating
         ratings = [ atmosphere_rating, availability_rating, quality_rating, service_rating, uniqueness_rating, value_rating ]
         ratings.compact.sum.to_f / ratings.compact.size
-      end
+    end
+
+    private
+
+    def update_review_avg_rating
+        rating = self.avg_rating
+        review.update(avg_rating: rating)
+    end
 end

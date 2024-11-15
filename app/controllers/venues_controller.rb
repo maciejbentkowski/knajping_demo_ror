@@ -1,15 +1,16 @@
 class VenuesController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
-  before_action :set_venue, except: [ :index, :new, :create ]
+  before_action :set_venue, except: [ :index, :show, :new, :create ]
   before_action :check_if_user_owns_venue, only: [ :edit, :update, :destroy ]
   before_action :set_categories, only: [ :new, :edit ]
 
   def index
-    @venues = Venue.active.all
+    @venues = Venue.active.includes(:categories, :reviews).with_attached_primary_photo.all
   end
 
   def show
-    @questions = @venue.questions
+    @venue = Venue.includes(:categories, :reviews, :questions).find(params[:id])
+    @questions = @venue.questions.includes(:answers)
     @question = Question.new
     @answer = Answer.new
   end
