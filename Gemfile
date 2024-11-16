@@ -1,8 +1,7 @@
 source "https://rubygems.org"
 ruby "3.3.5"
+gem "rails", "~> 8.0.0"
 
-
-gem "rails", github: "rails/rails", branch: "main"
 gem "propshaft"
 gem "pg", "~> 1.5"
 gem "puma", ">= 5.0"
@@ -11,6 +10,7 @@ gem "turbo-rails"
 gem "stimulus-rails"
 gem "tailwindcss-rails"
 gem "jbuilder"
+
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"

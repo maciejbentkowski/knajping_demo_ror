@@ -1,11 +1,13 @@
-# My Ruby on Rails Application
+# Knajping application
 
 This is a Ruby on Rails application designed to manage a dynamic web experience using a modern tech stack. This project is configured for high performance, development ease, and production readiness. Below are the details to get you started.
+
 ## Requirements
 
 - **Ruby**: 3.3.5 (using rbenv recommended)
 - **Rails**: 8.1.0.alpha
 - **PostgreSQL**: 16 or higher
+
 ## Getting Started
 
 ### Installation
