@@ -20,11 +20,11 @@ class Venue < ApplicationRecord
     scope :inactive, -> { where(is_active: false) }
 
     def avg_venue_rating
-        if self.reviews.average(:avg_rating).nil?
-            0.0
-        else
-            self.reviews.average(:avg_rating).round(2)
-        end
+         reviews.average(:avg_rating)&.round(2) || 0
+    end
+
+    def reviews_count
+        reviews.size
     end
 
     def self.most_reviewed_venue
@@ -47,9 +47,9 @@ class Venue < ApplicationRecord
         .order("avg_rating DESC")
         .first&.venue_id
 
-      return nil unless venue_id_with_best_rating
+        return nil unless venue_id_with_best_rating
 
-      Venue.find_by(id: venue_id_with_best_rating)
+        Venue.find_by(id: venue_id_with_best_rating)
     end
 
 

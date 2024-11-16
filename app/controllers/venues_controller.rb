@@ -5,7 +5,7 @@ class VenuesController < ApplicationController
   before_action :set_categories, only: [ :new, :edit ]
 
   def index
-    @venues = Venue.active.includes(:categories, :reviews).with_attached_primary_photo.all
+    @venues = Venue.active.includes(:venue_categories, :categories, :reviews).with_attached_primary_photo.all
   end
 
   def show
