@@ -34,9 +34,6 @@ RSpec.describe Rating, type: :model do
             it { should validate_numericality_of(:value_rating).only_integer }
             it { should validate_inclusion_of(:value_rating).in_range(1..6) }
         end
-        context "review_id validations" do
-            it { should validate_presence_of(:review_id) }
-        end
     end
 
     describe "associations" do

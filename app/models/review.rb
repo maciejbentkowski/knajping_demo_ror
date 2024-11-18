@@ -1,5 +1,5 @@
 class Review < ApplicationRecord
-    has_one :rating, dependent: :destroy
+    has_one :rating, dependent: :destroy, inverse_of: :review
     belongs_to :user
     belongs_to :venue
 
@@ -12,6 +12,7 @@ class Review < ApplicationRecord
     validates :user_id, presence: true
     validates :venue_id, presence: true
 
+    validates_associated :rating
 
     def rating_dictionary
         rating_dictionary = {}

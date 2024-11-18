@@ -31,23 +31,18 @@ class Rating < ApplicationRecord
             numericality: { only_integer: true },
             inclusion: { in: 1..6 }
 
-
-    validates :review_id, presence: true
-
-
     after_save :update_review_avg_rating
     after_destroy :update_review_avg_rating
 
 
     def avg_rating
         ratings = [ atmosphere_rating, availability_rating, quality_rating, service_rating, uniqueness_rating, value_rating ]
-        ratings.compact.sum.to_f / ratings.compact.size
+        (ratings.compact.sum.to_f / ratings.compact.size).round(2)
     end
 
     private
 
     def update_review_avg_rating
-        rating = self.avg_rating
-        review.update(avg_rating: rating)
+        review.update(avg_rating: avg_rating) if review.present?
     end
 end

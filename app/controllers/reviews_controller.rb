@@ -22,6 +22,7 @@ class ReviewsController < ApplicationController
     def create
         @review = Review.new(review_params.merge(user_id: current_user.id, venue_id: @venue.id))
         if @review.save
+            @review.update(avg_rating: @review.rating.avg_rating) # Calculate avg_rating after saving
             redirect_to venue_path(@venue)
         else
             render :new
@@ -38,7 +39,7 @@ class ReviewsController < ApplicationController
         else
           render :edit
         end
-      end
+    end
 
     private
     def set_venue
@@ -50,10 +51,10 @@ class ReviewsController < ApplicationController
         unless @review
           redirect_to new_venue_review_path(@venue)
         end
-      end
+    end
 
     def review_params
-        params.require(:review).permit(:title, :content, :user_id, :venue_id, rating_attributes: [ :atmosphere_rating, :availability_rating, :quality_rating, :service_rating, :uniqueness_rating, :value_rating ])
+        params.require(:review).permit(:title, :content, rating_attributes: [ :atmosphere_rating, :availability_rating, :quality_rating, :service_rating, :uniqueness_rating, :value_rating ])
     end
 
     def check_if_user_is_owner

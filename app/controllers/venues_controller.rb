@@ -1,7 +1,6 @@
 class VenuesController < ApplicationController
-  before_action :authenticate_user!, except: [ :index, :show ]
+  load_and_authorize_resource
   before_action :set_venue, except: [ :index, :show, :new, :create ]
-  before_action :check_if_user_owns_venue, only: [ :edit, :update, :destroy ]
   before_action :set_categories, only: [ :new, :edit ]
 
   def index
@@ -65,15 +64,10 @@ class VenuesController < ApplicationController
   end
 
   def venue_params
-    params.require(:venue).permit(:name, :is_active, :user_id, :primary_photo, photos: [], category_ids: [])
+    params.require(:venue).permit(:name, :is_active, :user_id, :primary_photo, :avg_rating, photos: [], category_ids: [])
   end
 
-  def check_if_user_owns_venue
-    owner = current_user
-    venue = Venue.find(params[:id])
-    if owner != venue.user
-      flash[:alert] = "Mozesz edytować tylko swoje lokale"
-      redirect_to root_path
-    end
+  def current_ability
+    @current_ability ||= VenueAbility.new(current_user)
   end
 end

@@ -18,6 +18,6 @@ class User < ApplicationRecord
 
 
   def self.best_reviewer
-    user = User.all.max_by { |user| user.reviews.count }
+    User.all.max_by { |user| user.reviews.count }
   end
 end
