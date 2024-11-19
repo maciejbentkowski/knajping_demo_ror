@@ -5,9 +5,9 @@ module VenuesHelper
 
     def check_primary_photo(venue)
         if venue.primary_photo.attached?
-          image_tag(venue.primary_photo.variant(resize_to_fill: [ 400, 400 ]).processed, class: "rounded-md m-auto drop-shadow-2xl")
+          image_tag(venue.primary_photo.variant(resize_to_fill: [ 200, 200 ]).processed, class: "rounded-md m-auto drop-shadow-2xl")
         else
-          image_tag("default_primary_photo.webp", width: 400, height: 300, class: "rounded-md m-auto drop-shadow-2xl")
+          image_tag("default_primary_photo.webp", width: 200, height: 200, class: "rounded-md m-auto drop-shadow-2xl")
 
         end
    end
@@ -30,5 +30,13 @@ module VenuesHelper
 
    def photo_in_form(photo)
       image_tag(photo.variant(resize_to_fill: [ 300, 300 ]).processed, class: "mx-auto object-cover my-5")
+   end
+
+   def check_reviews(venue)
+      if venue.reviews.count == 0
+        ""
+      else
+        "( %s in %s Reviews )" % [ venue.avg_venue_rating, venue.reviews_count ]
+      end
    end
 end
