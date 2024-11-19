@@ -43,8 +43,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "rspec-rails", "~> 7.1.0"
 
-  gem "ruby-lsp", require: false
-  gem "ruby-lsp-rubyfmt"
+  gem "rubocop-lsp"
 
   gem "faker"
   gem "htmlbeautifier"
@@ -57,6 +56,8 @@ end
 group :test do
   gem "shoulda-matchers", "~> 6.0"
   gem "simplecov", require: false
+  gem "rails-controller-testing"
+  gem "database_cleaner-active_record"
 end
 
 gem "devise", "~> 4.9"
