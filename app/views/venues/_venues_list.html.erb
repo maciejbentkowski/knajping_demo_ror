@@ -1,0 +1,36 @@
+<div class="grid grid-cols-12 gap-6">
+  <% @venues.each do |venue| %>
+    <div class="col-span-12">
+      <div class="w-full max-w-6xl bg-white shadow-md rounded-lg dark:bg-surface-dark border min-h-32">
+        <div class="grid grid-cols-12">
+          <div class="col-span-4">
+            <div class="relative bg-cover bg-no-repeat p-3">
+              <%= check_primary_photo(venue)%>
+              <div class="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-[hsla(0,0%,98%,0.15)] bg-fixed opacity-0 transition duration-300 ease-in-out hover:opacity-100">
+              </div>
+            </div>
+          </div>
+          <div class="col-span-8">
+            <div class="p-6 text-surface">
+              <div class="flex">
+                <h3 class="text-l font-medium">
+                  <%= link_to venue.name, venue_path(venue), data: { turbo_frame: "_top"} %>
+                  <div class="inline">
+                    <%= check_reviews(venue) %>
+                  </div>
+                </h3>
+                <div class="">
+                </div>
+              </div>
+              <div class="text-xs italic">
+                <% for category in venue.categories%>
+                  <%= category.name %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -52,6 +52,11 @@ class Venue < ApplicationRecord
         Venue.find_by(id: venue_id_with_best_rating)
     end
 
+    def self.search(params)
+        params[:query].blank? ? all : where(
+            "lower(name) LIKE ?", "%#{sanitize_sql_like((params[:query]).downcase)}%"
+        )
+    end
 
     private
 
