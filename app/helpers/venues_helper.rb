@@ -5,9 +5,9 @@ module VenuesHelper
 
     def check_primary_photo(venue)
         if venue.primary_photo.attached?
-          image_tag(venue.primary_photo.variant(resize_to_fill: [ 200, 200 ]).processed, class: "rounded-md m-auto drop-shadow-2xl")
+          image_tag(venue.primary_photo.variant(resize_to_fill: [ 250, 250 ]).processed, class: "rounded-md m-auto drop-shadow-2xl")
         else
-          image_tag("default_primary_photo.webp", width: 200, height: 200, class: "rounded-md m-auto drop-shadow-2xl")
+          image_tag("default_primary_photo.webp", width: 250, height: 250, class: "rounded-md m-auto drop-shadow-2xl")
 
         end
    end

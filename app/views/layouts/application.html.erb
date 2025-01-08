@@ -14,17 +14,19 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
   <body>
     <header>
       <%= render partial: 'layouts/header' %>
     </header>
     <div>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+      <% if notice %>
+        <p class="notice-info"><%= notice %></p>
+      <% elsif alert%>
+        <p class="alert-warning"><%= alert %></p>
+      <%end%>
     </div>
     <main class="flex flex-col min-h-screen">
       <%= yield %>
