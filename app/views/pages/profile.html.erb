@@ -21,7 +21,7 @@
           <ul>
             <% if @user == current_user %>
               <li>
-                <%=link_to "Edytuj konto", edit_user_registration_path %>
+                <%=link_to "Edytuj konto", edit_user_registration_path, class: "btn" %>
               </li>
             <% end %>
           </ul>
@@ -57,10 +57,8 @@
               </div>
               <div class="flex ml-auto mx-2 ">
                 <% if @user == current_user %>
-                  <div class="">
-                    <button type="button" class="bg-blue-600 hover:bg-blue-500 text-white my-4 rounded">
-                      <%=link_to "Edytuj" , edit_venue_path(venue), :class => "py-1 px-3 block" %>
-                    </button>
+                  <div class="my-auto">
+                    <%=link_to "Edytuj" , edit_venue_path(venue), :class => "btn" %>
                   </div>
                   <div>
                     <%= button_to 'Delete' , venue_path(venue), form_class: "py-1 px-3 block bg-red-600 hover:bg-red-400 text-white my-4 ml-2 rounded",
