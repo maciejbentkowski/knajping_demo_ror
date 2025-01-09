@@ -3,7 +3,7 @@ module ApplicationHelper
         date.strftime("%d/%m/%Y")
     end
 
-    def header_avatar()
+    def header_avatar
         user=current_user
         if user.avatar.attached?
           image_tag(user.avatar.variant(resize_and_pad: [ 500, 500 ]))
@@ -11,6 +11,4 @@ module ApplicationHelper
           image_tag("default_avatar.png")
         end
     end
-
-
 end

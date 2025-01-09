@@ -22,7 +22,7 @@ module VenuesHelper
 
    def primary_photo_in_form(venue)
       if venue.primary_photo.attached?
-        image_tag(venue.primary_photo.variant(resize_to_fill: [ 300, 300 ]).processed, class: "mx-auto object-cover my-5")
+        image_tag(venue.primary_photo.variant(resize_to_fill: [ 200, 200 ]).processed, class: "mx-auto object-cover my-5")
       else
         "Zdjęcie nie zostało dodane"
       end
