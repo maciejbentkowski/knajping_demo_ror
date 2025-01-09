@@ -1,9 +1,9 @@
 module PagesHelper
-    def check_avatar(user)
+    def profile_avatar(user)
         if user.avatar.attached?
-          image_tag(user.avatar.variant(resize_and_pad: [ 500, 500 ]), class: "rounded-md m-auto drop-shadow-2xl")
+          image_tag(user.avatar.variant(resize_and_pad: [ 500, 500 ]))
         else
-          image_tag("default_avatar.jpg", class: "rounded-md m-auto drop-shadow-2xl")
+          image_tag("default_avatar.png", size: "500")
         end
-   end
+    end
 end

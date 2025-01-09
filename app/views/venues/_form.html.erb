@@ -1,10 +1,10 @@
 <div class="grid grid-cols-12 mt-5 ">
   <div class="col-start-2 col-span-10 pl-4 py-4 rounded px-5">
     <%= form_with(model: venue) do |form| %>
-      <div>
+      <div class= "">
         <div class="grid gap-x-8 grid-cols-2">
-          <div class="col-span-1">
-            <div>
+          <div class= "col-span-1">
+            <div class="">
               <label class="form-control w-full max-w-xs">
                 <div class="label">
                   <%= form.label :name, "Nazwa lokalu", class:"label-text text-lg" %>
@@ -36,7 +36,7 @@
                 <div class="label">
                   <%= form.label :primary_photo, "Zdjęcie główne", class:"label-text text-lg" %>
                 </div>
-                <div class="field border p-3 my-3 w-full max-w-4xl bg-base-100  rounded-xl">
+                <div class="field border p-3 my-3 w-full max-w-4xl bg-base-100  rounded-lg">
                   <div class="">
                     <%= primary_photo_in_form(@venue)%>
                     <% if @venue.primary_photo.attached?%>
@@ -57,7 +57,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="field border p-3 my-3 w-full max-w-4xl bg-base-100 rounded-xl ">
+                <div class="field border p-3 my-3 w-full max-w-4xl bg-base-100 rounded-lg ">
                   <div class="grid grid-cols-2 gap-4 p-3">
                     <% if @venue.photos.attached?%>
                       <% @venue.photos.each do |photo| %>
