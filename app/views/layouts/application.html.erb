@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="cupcake">
   <head>
     <title><%= content_for(:title) || "Knajping" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -31,7 +31,7 @@
     <main class="flex flex-col min-h-screen">
       <%= yield %>
     </main>
-    <footer class="border-black/10 border-t-2 py-2 bg-gray-400/20">
+    <footer class="border-black/10 border-t-2 py-2 ">
       <%= render partial: 'layouts/footer' %>
     </footer>
   </body>

@@ -21,7 +21,7 @@
           <ul>
             <% if @user == current_user %>
               <li>
-                <%=link_to "Edytuj konto", edit_user_registration_path, class: "btn" %>
+                <%=link_to "Edytuj konto", edit_user_registration_path, class: "btn bg-blue-300" %>
               </li>
             <% end %>
           </ul>
@@ -37,7 +37,7 @@
       <div class=" ">
         <ul class="divide-y border ">
           <% @user_venues.each do |venue| %>
-            <li class="flex pt-2 place-items-center min-h-16 min-w-8 pl-2">
+            <li class="flex place-items-center min-h-16 min-w-8 pl-2">
               <div class="min-w-8 w-1/4">
                 <%=link_to venue.name, venue_path(venue)%>
                 <div>
@@ -55,13 +55,13 @@
               <div>
                 Rating: <%=venue.avg_venue_rating%>
               </div>
-              <div class="flex ml-auto mx-2 ">
+              <div class="flex ml-auto mx-2  ">
                 <% if @user == current_user %>
-                  <div class="my-auto">
-                    <%=link_to "Edytuj" , edit_venue_path(venue), :class => "btn" %>
+                  <div class="my-auto mx-2">
+                    <%=link_to "Edytuj" , edit_venue_path(venue), :class => "btn bg-blue-300" %>
                   </div>
-                  <div>
-                    <%= button_to 'Delete' , venue_path(venue), form_class: "py-1 px-3 block bg-red-600 hover:bg-red-400 text-white my-4 ml-2 rounded",
+                  <div class="mx-2">
+                    <%= button_to 'Delete' , venue_path(venue), form_class: "btn bg-red-600",
                                                             method: :delete,
                                                             data: { turbo_method: :delete,
                                                             turbo_confirm: "Are you sure you want to delete this?"} %>
