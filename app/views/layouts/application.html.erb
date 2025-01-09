@@ -18,9 +18,7 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
   <body>
-    <header>
-      <%= render partial: 'layouts/header' %>
-    </header>
+    <%= render partial: 'layouts/header' %>
     <div>
       <% if notice %>
         <p class="notice-info"><%= notice %></p>
@@ -31,8 +29,6 @@
     <main class="flex flex-col min-h-screen">
       <%= yield %>
     </main>
-    <footer class="border-black/10 border-t-2 py-2 ">
-      <%= render partial: 'layouts/footer' %>
-    </footer>
+    <%= render partial: 'layouts/footer' %>
   </body>
 </html>
