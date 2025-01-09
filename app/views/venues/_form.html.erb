@@ -1,80 +1,108 @@
 <div class="grid grid-cols-12 mt-5 ">
   <div class="col-start-2 col-span-10 pl-4 py-4 rounded px-5">
     <%= form_with(model: venue) do |form| %>
-      <div class= "">
+      <div>
         <div class="grid gap-x-8 grid-cols-2">
-          <div class= "col-span-1">
-            <div class="border p-3 my-3 w-full max-w-4xl bg-white shadow-md rounded-lg dark:bg-surface-dark">
-              <%= form.label :name, "Nazwa" %>
-              <%= form.text_field :name %>
+          <div class="col-span-1">
+            <div>
+              <label class="form-control w-full max-w-xs">
+                <div class="label">
+                  <%= form.label :name, "Nazwa lokalu", class:"label-text text-lg" %>
+                </div>
+                <%= form.text_field :name, class:"input input-bordered w-full max-w-xs" %>
+              </label>
             </div>
-            <div class= "border p-3 my-3 w-full max-w-4xl bg-white shadow-md rounded-lg dark:bg-surface-dark ">
-              <div class= "text-center mb-3">
-                Kategorie:
-              </div>
-              <div class="">
-                <% Category.all.each do |category| %>
-                  <div>
-                    <%= check_box_tag 'venue[category_ids][]', category.id, @venue.category_ids.include?(category.id) %>
-                    <%= label_tag "venue_category_ids_#{category.id}", category.name %>
-                  </div>
-                <% end %>
+            <div class= "my-3 w-full max-w-4xl dark:bg-surface-dark ">
+              <div class="form-control">
+                <div class= "label ">
+                  <%= form.label :categories, "Kategorie", class:"label-text text-lg"%>
+                </div>
+                <div class="grid grid-cols-2 gap-x-2 gap-y-2">
+                  <% Category.all.each do |category| %>
+                    <div class="label cursor-pointer border-2 rounded-full bg-base-100 ">
+                      <span class="label-text pl-2">
+                        <%= label_tag "venue_category_ids_#{category.id}", category.name%>
+                      </span>
+                      <%= check_box_tag 'venue[category_ids][]', category.id, @venue.category_ids.include?(category.id), class: "checkbox border-amber-700 [--chkbg:theme(colors.base-300)] [--chkfg:orange] checked:border-amber-700"  %>
+                    </div>
+                  <% end %>
+                </div>
               </div>
             </div>
           </div>
           <div class= "col-span-1">
-            <div class="field border p-3 my-3 w-full max-w-4xl bg-white shadow-md rounded-lg dark:bg-surface-dark">
-              <div class="text-center px-5">
-                <%= form.label :primary_photo, "Zdjęcie Główne" %>
-                <div class=my-5>
-                  <%= primary_photo_in_form(@venue)%>
+            <div>
+              <label class="form-control w-full max-w-xs">
+                <div class="label">
+                  <%= form.label :primary_photo, "Zdjęcie główne", class:"label-text text-lg" %>
                 </div>
+                <div class="field border p-3 my-3 w-full max-w-4xl bg-base-100  rounded-xl">
+                  <div class="">
+                    <%= primary_photo_in_form(@venue)%>
+                    <% if @venue.primary_photo.attached?%>
+                      <%=link_to "Usuń", remove_primary_photo_venue_path(@venue, primary_photo_id: @venue.primary_photo.id), data: {confirm: "Are You sure?", turbo_method: :delete}, class: "mt-2 text-red-700"%>
+                    <% end%>
+                  </div>
+                  <%= form.file_field :primary_photo, class:"file-input file-input-bordered w-full max-w-xs" %>
+                </label>
               </div>
-              <%= form.file_field :primary_photo %>
             </div>
-            <div class="field border p-3 my-3 w-full max-w-4xl bg-white shadow-md rounded-lg dark:bg-surface-dark">
-              <div class="text-center mt-2">
-                <%= form.label :photos, "Zdjęcia"%>
-                <div class="text-xs">
-                  Możesz dodać do 4 zdjęć
-                </div>
-              </div>
-              <div class="grid grid-cols-2 gap-4 p-3">
-                <% if @venue.photos.attached?%>
-                  <% @venue.photos.each do |photo| %>
-                    <%= form.hidden_field :photos, multiple: true, value: photo.signed_id %>
-                    <div>
-                      <%= photo_in_form(photo)%>
-                      <div class="text-center">
-                        <%=link_to "Usuń", remove_photo_venue_path(@venue, photo_id: photo), data: {confirm: "Are You sure?", turbo_method: :delete}, class: "mt-2 text-red-700"%>
-                      </div>
+            <div>
+              <label class="form-control w-full max-w-xs">
+                <div class="mt-2">
+                  <div class="label">
+                    <%= form.label :photos, "Zdjęcia lokalu", class:"label-text text-lg" %>
+                    <div class="text-xs">
+                      Maksymalnie 4 zdjęcia
                     </div>
-                  <% end %>
-                <%end %>
-              </div>
-              <%= form.file_field :photos, multiple: true %>
+                  </div>
+                </div>
+                <div class="field border p-3 my-3 w-full max-w-4xl bg-base-100 rounded-xl ">
+                  <div class="grid grid-cols-2 gap-4 p-3">
+                    <% if @venue.photos.attached?%>
+                      <% @venue.photos.each do |photo| %>
+                        <%= form.hidden_field :photos, multiple: true, value: photo.signed_id %>
+                        <div>
+                          <%= photo_in_form(photo)%>
+                          <div class="text-center">
+                            <%=link_to "Usuń", remove_photo_venue_path(@venue, photo_id: photo), data: {confirm: "Are You sure?", turbo_method: :delete}, class: "mt-2 text-red-700"%>
+                          </div>
+                        </div>
+                      <% end %>
+                    <%end %>
+                  </div>
+                  <%= form.file_field :photos, multiple: true, class:"file-input file-input-bordered w-full max-w-xs" %>
+                </div>
+              </label>
             </div>
           </div>
         </div>
         <% if action_name == 'new' %>
-          <div class="text-xs">
+          <div class="text-xs my-2">
             <p>Po stworzeniu swojego lokalu, będzie on widoczny tylko dla Ciebie. Aktywuj go w swoim profilu</p>
           </div>
-          <div class="my-3 px-6 py-2 bg-white text-indigo-600 rounded-lg font-semibold hover:bg-indigo-50 text-center">
-            <%= form.submit%>
+          <div class="text-center my-2">
+            <button class="btn btn-block bg-base-100 hover:bg-base-300/20 hover:text-black/70">
+              <%= form.submit %>
+            </button>
           </div>
         <% else %>
-          <div>
-            <div class="my-3">
-              <%= form.label :is_active, "Czy Twój lokal jest aktywny?" %>
-              <%= form.check_box :is_active %>
+          <div class="my-2">
+            <div class="form-control">
+              <label class="label cursor-pointer mx-auto">
+                <span class="label-text px-4">
+                  <%= form.label :is_active, "Czy Twój lokal jest aktywny?" %>
+                </span>
+                <%= form.check_box :is_active, class: "checkbox border-amber-700 [--chkbg:theme(colors.base-300)] [--chkfg:orange] checked:border-amber-700" %>
+              </label>
             </div>
-            <div class="my-3 px-6 py-2 bg-white text-indigo-600 rounded-lg font-semibold hover:bg-indigo-50 text-center ">
-              <%= form.submit %>
+            <div class="text-center my-2">
+              <button class="btn btn-block bg-base-100 hover:bg-base-300/20 hover:text-black/70">
+                <%= form.submit %>
+              </button>
             </div>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
-</div>

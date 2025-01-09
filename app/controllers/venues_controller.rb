@@ -54,6 +54,12 @@ class VenuesController < ApplicationController
     redirect_to(edit_venue_path(@venue))
   end
 
+  def remove_primary_photo
+    primary_photo = ActiveStorage::Attachment.find(params[:primary_photo_id])
+    primary_photo.purge_later
+    redirect_to(edit_venue_path(@venue))
+  end
+
   private
   def set_venue
     @venue = Venue.find(params[:id])

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :venues do
     member do
       delete :remove_photo
+      delete :remove_primary_photo
     end
     resources :questions, only: [ :create, :destroy ] do
       resources :answers, only: [ :create, :destroy ]
