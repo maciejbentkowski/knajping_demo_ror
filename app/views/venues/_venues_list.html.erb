@@ -37,4 +37,9 @@
       </div>
     <%end %>
   <% end %>
+  <div class="col-span-12 justify-items-center">
+    <div class="my-2 ">
+      <%== pagy_nav(@pagy) if @pagy.pages > 1 %>
+    </div>
+  </div>
 </div>
