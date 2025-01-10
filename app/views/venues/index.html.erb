@@ -5,6 +5,9 @@
       <%= text_field_tag "query", nil, placeholder: "Wyszukaj lokal ...", class:"input w-full my-5 enabled:hover:bg-slate-200"%>
     <% end %>
   </div>
+  <div class="my-4">
+    <%== pagy_nav(@pagy) if @pagy.pages > 1 %>
+  </div>
   <div class="grid grid-cols-12 gap-2 w-full ">
     <div class="col-span-8">
       <%= turbo_frame_tag "search-results" do %>
