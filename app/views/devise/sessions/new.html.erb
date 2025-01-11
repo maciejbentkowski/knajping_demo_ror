@@ -1,27 +1,46 @@
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
-  <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+<div class="flex items-center justify-center min-h-screen bg-base-200 py-8">
+  <div class="w-full max-w-md p-8 space-y-6 bg-base-100 rounded-lg shadow-md">
     <h2 class="text-2xl font-bold text-center text-gray-800">Zaloguj się</h2>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-4" }) do |f| %>
       <div class="flex flex-col space-y-1 my-4">
-        <%= f.label :email, class: "text-sm font-medium text-gray-700" %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-200" %>
+        <label class="form-control w-full">
+          <div class="label">
+            <%= f.label :email, "Email", class:"label-text text-sm font-medium" %>
+          </div>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"input input-bordered w-full bg-white " %>
+        </label>
       </div>
       <div class="flex flex-col space-y-1 my-4">
-        <%= f.label :password, class: "text-sm font-medium text-gray-700" %>
-        <%= f.password_field :password, autocomplete: "current-password", class: "w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-200" %>
+        <label class="form-control w-full">
+          <div class="label">
+            <%= f.label :password, class:"label-text text-sm font-medium" %>
+          </div>
+          <%= f.password_field :password, autocomplete: "current-password", class:"input input-bordered w-full bg-white " %>
+        </label>
       </div>
       <% if devise_mapping.rememberable? %>
         <div class="flex items-center">
-          <%= f.check_box :remember_me, class: "mr-2" %>
-          <%= f.label :remember_me, "Zapamiętać Cię?", class: "text-sm text-gray-600" %>
+          <div class="form-control ">
+            <label class="label cursor-pointer mx-auto ">
+              <%= f.check_box :remember_me, class: "checkbox border-amber-700 [--chkbg:theme(colors.base-300)] [--chkfg:orange] checked:border-amber-700" %>
+              <span class="label-text px-2">
+                <%= f.label :remember_me, "Zapamiętać Cię?", class: "text-sm text-gray-600" %>
+              </span>
+            </label>
+          </div>
         </div>
       <% end %>
-      <div>
-        <%= f.submit "Zaloguj się", class: "w-full px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200" %>
+      <div class="flex justify-center">
+        <%= f.submit "Zaloguj się", class: "btn btn-accent btn-wide btn-xs sm:btn-sm md:btn-md lg:btn-lg " %>
       </div>
     <% end %>
-    <div class="text-center">
-      <%= render "devise/shared/links" %>
+    <div class="text-center border-t">
+      <div class="text-xs my-2">
+        Nie masz konta?
+      </div>
+      <div class="text-lg text-accent">
+        <%= render "devise/shared/links" %>
+      </div>
     </div>
   </div>
 </div>
