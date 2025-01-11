@@ -78,9 +78,9 @@
     <div class="text-xs my-2">
       <p>Po stworzeniu swojego lokalu, będzie on widoczny tylko dla Ciebie. Aktywuj go w swoim profilu</p>
     </div>
-    <div class="text-center my-2">
-      <button class="btn btn-block bg-base-100 hover:bg-base-300/20 hover:text-black/70">
-        <%= form.submit %>
+    <div class="flex justify-center">
+      <button class="btn btn-accent btn-wide btn-xs sm:btn-sm md:btn-md lg:btn-lg">
+        <%= form.submit%>
       </button>
     </div>
   <% else %>
@@ -93,9 +93,9 @@
           <%= form.check_box :is_active, class: "checkbox border-amber-700 [--chkbg:theme(colors.base-300)] [--chkfg:orange] checked:border-amber-700" %>
         </label>
       </div>
-      <div class="text-center my-2">
-        <button class="btn btn-block bg-base-100 hover:bg-base-300/20 hover:text-black/70">
-          <%= form.submit %>
+      <div class="flex justify-center">
+        <button class="btn btn-accent btn-wide btn-xs sm:btn-sm md:btn-md lg:btn-lg">
+          <%= form.submit%>
         </button>
       </div>
     <% end %>
