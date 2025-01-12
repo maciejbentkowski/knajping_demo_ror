@@ -1,6 +1,6 @@
-<div class="flex flex-col items-center min-h-screen bg-gray-100 p-8">
+<div class="flex flex-col items-center min-h-screen bg-base-200 p-8">
   <div class="grid grid-cols-12 gap-4 mt-4 mx-10 w-full">
-    <div class="col-span-6 border p-2  max-w-4xl bg-white shadow-md rounded-lg dark:bg-surface-dark min-w-96 min-h-64">
+    <div class="col-span-6 border p-2  max-w-4xl bg-base-100 shadow-md rounded-lg dark:bg-surface-dark min-w-96 min-h-64">
       <div>
         <div class="text-2xl">
           <% if @venue.reviews.count != 0 %>
@@ -12,13 +12,11 @@
             </div>
           <% end %>
         </div>
-        <div class="flex">
-          <% if user_signed_in? %>
-            <button type="button" class="border bg-slate-500 hover:bg-slate-400 text-black my-4 rounded">
-              <%=link_to "Oceń", new_venue_review_path(@venue), class: "py-1 px-3 block" %>
-            </button>
-          <% end %>
-        </div>
+        <% if user_signed_in? %>
+          <button class="btn btn-primary ">
+            <%=link_to "Oceń", new_venue_review_path(@venue), class: "block px-6" %>
+          </button>
+        <% end %>
         <div>
           <div class="relative bg-cover bg-no-repeat p-3 ">
             <%= check_primary_photo(@venue)%>
@@ -33,7 +31,7 @@
         </div>
       </div>
     </div>
-    <div class="col-span-6 w-full max-w-4xl bg-white shadow-md rounded-lg dark:bg-surface-dark border min-h-64">
+    <div class="col-span-6 w-full max-w-4xl bg-base-100 shadow-md rounded-lg dark:bg-surface-dark border min-h-64">
       <div class="text-lg p-3">
         Zdjęcia:
       </div>
@@ -49,7 +47,7 @@
         <% end %>
       </div>
     </div>
-    <div class="col-span-12 p-3 w-full  bg-white shadow-md rounded-lg dark:bg-surface-dark border min-h-64">
+    <div class="col-span-12 p-3 w-full  bg-base-100 shadow-md rounded-lg dark:bg-surface-dark border min-h-64">
       <div class="text-lg mb-5">
         <h3>
           Recenzje:
@@ -94,7 +92,7 @@
         </div>
       <% end %>
     </div>
-    <div class="col-span-12 p-3 w-full  bg-white shadow-md rounded-lg dark:bg-surface-dark border min-h-64">
+    <div class="col-span-12 p-3 w-full  bg-base-100 shadow-md rounded-lg dark:bg-surface-dark border min-h-64">
       <div>
         <div class="text-lg mb-5">
           <h3>
@@ -105,14 +103,14 @@
           <%if user_signed_in? %>
             <div class="mt-4">
               <%= form_with(model:[@venue,@question]) do |f| %>
-                <div class="my-4">
-                  <%= f.label "Pytania o lokal:", class: "text-lg mb-5" %>
-                </div>
-                <div>
-                  <%= f.text_field :question, class:"w-1/2" %>
-                </div>
+                <label class="form-control w-full">
+                  <div class="label">
+                    <%= f.label "Pytania o lokal:", class:"label-text text-sm font-medium" %>
+                  </div>
+                  <%= f.text_field :question, class:"input input-bordered w-full bg-white " %>
+                </label>
                 <div class=" py-2 block">
-                  <%= f.submit "Zapytaj" %>
+                  <%= f.submit "Zapytaj", class: "btn btn-accent btn-wide btn-xs sm:btn-sm md:btn-md lg:btn-lg " %>
                 </div>
               <% end %>
             </div>
@@ -120,7 +118,7 @@
         </div>
         <div>
           <% for question in @questions %>
-            <div class="border mt-3 px-3 py-2">
+            <div class="border-2 mt-3 px-3 py-2">
               <div>
                 <%=datetime(question.created_at)%> <%= question.user.username %>:            
               </div>
@@ -134,10 +132,14 @@
                 <div class="mt-4">
                   <%if user_signed_in? %>
                     <%= form_with(model:[@venue, question, @answer]) do |f| %>
-                      <%= f.label "Odpowiedz:" %>
-                      <%= f.text_field :content %><br/>
-                      <div class=" py-1 px-3 block">
-                        <%= f.submit %>
+                      <label class="form-control w-full">
+                        <div class="label">
+                          <%= f.label "Odpowiedz:", class:"label-text text-sm font-medium" %>
+                        </div>
+                        <%= f.text_field :content, class:"input input-bordered w-full bg-white " %>
+                      </label>
+                      <div class=" py-2 block">
+                        <%= f.submit "Odpowiedz", class: "btn btn-accent btn-wide btn-xs sm:btn-sm md:btn-md lg:btn-lg " %>
                       </div>
                     <% end %>
                   <% end%>
@@ -154,11 +156,11 @@
                         </div>
                         <div class="col-span-1 text-center">
                           <%if current_user == answer.user %>
-                            <div>
-                              Edytuj
-                            </div>
-                            <div>
-                              <%=button_to "Usuń", venue_question_answer_path(@venue, answer.question, answer), method: :delete, class: "mt-2 text-red-700"%>
+                            <div class="mx-2">
+                              <%= button_to 'Usuń' , venue_question_answer_path(@venue, answer.question, answer), form_class: "btn bg-red-600",
+                                                            method: :delete,
+                                                            data: { turbo_method: :delete,
+                                                            turbo_confirm: "Are you sure you want to delete this?"} %>
                             </div>
                           <% end %>
                         </div>

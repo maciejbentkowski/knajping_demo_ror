@@ -23,7 +23,7 @@
           <ul>
             <% if @user == current_user %>
               <li>
-                <%=link_to "Edytuj konto", edit_user_registration_path, class: "btn bg-blue-300" %>
+                <%=link_to "Edytuj konto", edit_user_registration_path, class: "btn btn-accent" %>
               </li>
             <% end %>
           </ul>
@@ -60,7 +60,7 @@
               <div class="flex ml-auto mx-2  ">
                 <% if @user == current_user %>
                   <div class="my-auto mx-2">
-                    <%=link_to "Edytuj" , edit_venue_path(venue), :class => "btn bg-blue-300" %>
+                    <%=link_to "Edytuj" , edit_venue_path(venue), :class => "btn btn-accent" %>
                   </div>
                   <div class="mx-2">
                     <%= button_to 'Delete' , venue_path(venue), form_class: "btn bg-red-600",
