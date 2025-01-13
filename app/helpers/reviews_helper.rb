@@ -1,5 +1,4 @@
 module ReviewsHelper
-
     def review_avatar(user)
         if user.avatar.attached?
           image_tag(user.avatar.variant(resize_and_pad: [ 500, 500 ]))
