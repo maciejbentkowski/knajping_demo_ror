@@ -62,8 +62,8 @@
                   <div class="my-auto mx-2">
                     <%=link_to "Edytuj" , edit_venue_path(venue), :class => "btn btn-accent" %>
                   </div>
-                  <div class="mx-2">
-                    <%= button_to 'Delete' , venue_path(venue), form_class: "btn bg-red-600",
+                  <div class="">
+                    <%= button_to 'Usuń' , venue_path(venue), form_class: "btn bg-red-600 px-4",
                                                             method: :delete,
                                                             data: { turbo_method: :delete,
                                                             turbo_confirm: "Are you sure you want to delete this?"} %>

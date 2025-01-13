@@ -16,7 +16,7 @@ class Comment < ApplicationRecord
         user_review_rating = Review.find_by(user_id: self.user.id, venue_id: venue.id)
 
         if user_review_rating.nil?
-            "No rating"
+            "Brak recenzji"
         else
             user_review_rating.avg_review_rating
         end

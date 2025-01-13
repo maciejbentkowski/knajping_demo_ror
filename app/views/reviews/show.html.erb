@@ -4,74 +4,96 @@
       <%= link_to "Wróć", :back %>
     </div>
     <div>
-      <div class="my-3 text-xl">
+      <div class="my-3 text-xl flex items-center">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+          <div class="w-8 rounded-full">
+            <%= review_avatar(@review.user)%>
+          </div>
+        </div>
         <h3>
-          <%= @review.user.username%> on  <%=date(@review.created_at)%>
+          <%= @review.user.username%>
         </h3>
       </div>
       <div class="text-center text-4xl">
         <h2>
-          <%= @review.title%> - <%= @review.avg_review_rating %>
+          <%= @review.title%>
         </h2>
       </div>
-    </div>
-    <div>
-      <div class="border-t my-5">
-        <div class="flex text-center justify-evenly mt-2">
-          <% @review.rating_dictionary.each do |category, rating| %>
-            <div class="">
-              <div class="">
-                <%= category %>
-              </div>
-              <div class="">
-                <%= rating %>
-              </div>
-            </div>
-          <% end %>
-        </div>
+      <div class="my-4 ">
+        <p class="text-lg leading-6 text-pretty indent-4">
+          <%= @review.content%>
+        </p>
       </div>
     </div>
-    <div>
-      <p>
-        <%= @review.content%>
-      </p>
+    <div class="border-t my-5">
+      <div class="text-center text-2xl py-2">
+        (<%= @review.avg_review_rating%> / 6)
+      </div>
+      <div class="flex text-center justify-evenly mt-2">
+        <% @review.rating_dictionary.each do |category, rating| %>
+          <div class="">
+            <div class="">
+              <%= category %>
+            </div>
+            <div class="">
+              <%= rating %>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
     <div class="border col-span-12 p-3 my-9">
-      <div>
-        <div class="mt-4">
-          <% if user_signed_in? %>
-            <div class="mb-4">
-              Skomentuj tę recenzję:
-            </div>
-            <%= form_with(model:[@venue,@review,@comment]) do |f| %>
-              <%= f.text_field :content %><br/>
-              <div class=" py-1 px-3 block">
-                <%= f.submit %>
-              </div>
-            <% end %>
-          <% else %>
-            <div>
-              Zaloguj się, aby skomentować
-            </div>
-          <% end%>
-        </div>
-        <div class="border-2 mt-3 px-3 py-2 divide-y-2 ">
-          <% for comment in @review.comments%>
-            <div class="py-4">
-              <div class="float  ">
-                <div>
-                  <%= comment.user.username%> (<%=comment.comment_user_avg_rating%>):
+      <div class="mt-4">
+        <% if user_signed_in? %>
+          <%= form_with(model:[@venue,@review,@comment]) do |f| %>
+            <div class="flex flex-col space-y-1 my-4">
+              <label class="form-control w-full">
+                <div class="label">
+                  <%= f.label :content, "Skomentuj tę recenzję:", class:"label-text text-sm font-medium" %>
                 </div>
-                <div class="px-3 mt-2 italic">
-                  <%= comment.content%>
-                </div>
-                <%if current_user == comment.user %>
-                  <%=button_to "Usuń", venue_review_comment_path(@venue, @review, comment), method: :delete, class: "mt-2 text-red-700"%>
-                <% end %>
-              </div>
+                <%= f.text_field :content, class:"input input-bordered w-full bg-white " %>
+              </label>
+            </div>
+            <div class="flex justify-center">
+              <button class="btn btn-accent btn-wide btn-xs sm:btn-sm md:btn-md lg:btn-lg">
+                <%= f.submit%>
+              </button>
             </div>
           <% end %>
-        </div>
+        <% else %>
+          <div>
+            Zaloguj się, aby skomentować
+          </div>
+        <% end %>
+      </div>
+      <div class="divide-y border-t mt-2">
+        <% for comment in @review.comments%>
+          <% if @review.comments.count < 1 %>
+          <% else %>
+            <div class="py-4">
+              <div class="flex items-center">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                  <div class="w-8 rounded-full">
+                    <%= comment_avatar(comment.user)%>
+                  </div>
+                </div>
+                <div>
+                  <%=link_to comment.user.username, profile_path(comment.user.id)%> (<%=comment.comment_user_avg_rating%>):
+                </div>
+              </div>
+              <div class="px-3 mt-2ml-8">
+                <div class="italic inline bg-accent/10 text-lg">
+                  <%= comment.content%>
+                </div>
+              </div>
+              <%if current_user == comment.user %>
+                <div class="text-center">
+                  <%=button_to "Usuń", venue_review_comment_path(@venue, @review, comment), method: :delete, class: "mt-2 text-red-700"%>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
       </div>
     </div>
   </div>

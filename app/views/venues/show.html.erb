@@ -139,7 +139,7 @@
                   </div>
                 </div>
                 <div class=" text-accent">
-                  <%= question.user.username %>:
+                  <%=link_to question.user.username, profile_path(question.user.id) %>:
                 </div>
               </div>
               <div class="grid grid-cols-4">
@@ -188,7 +188,7 @@
                           </div>
                         </div>
                         <div class=" text-accent">
-                          <%= answer.user.username %>:
+                          <%=link_to answer.user.username, profile_path(answer.user.id) %>:
                         </div>
                       </div>
                       <div class="grid grid-cols-4">
