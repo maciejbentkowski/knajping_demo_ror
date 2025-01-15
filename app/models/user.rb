@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  enum :role, [:user, :moderator, :admin]
+  after_initialize :set_default_role, :if => :new_record?
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -16,6 +18,10 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true, length: { maximum: 50 }
   validates :email, presence: true, uniqueness: true, length: { maximum: 255 }
 
+
+  def set_default_role
+    self.role ||= :user
+  end
 
   def self.best_reviewer
     User.all.max_by { |user| user.reviews.count }

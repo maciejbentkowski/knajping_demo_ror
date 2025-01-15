@@ -15,6 +15,10 @@ gem "jbuilder"
 
 gem "cancancan"
 
+gem "devise", "~> 4.9"
+
+gem "pagy", "~> 9.3"
+
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -60,7 +64,3 @@ group :test do
   gem "rails-controller-testing"
   gem "database_cleaner-active_record"
 end
-
-gem "devise", "~> 4.9"
-
-gem "pagy", "~> 9.3"

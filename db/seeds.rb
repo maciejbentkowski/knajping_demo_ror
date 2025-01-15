@@ -36,10 +36,10 @@ puts "Created 5 Categories"
 
 puts "Creating Users"
 sample_users = [
-  { email: "admin@sample.com", password: "password", username: "Admin" },
-  { email: "user1@sample.com", password: "password", username: Faker::Name.name },
-  { email: "user2@sample.com", password: "password", username: Faker::Name.name },
-  { email: "user3@sample.com", password: "password", username: Faker::Name.name }
+  { email: "admin@sample.com", password: "password", username: "Admin", role: :admin},
+  { email: "user1@sample.com", password: "password", username: Faker::Name.name},
+  { email: "user2@sample.com", password: "password", username: Faker::Name.name},
+  { email: "user3@sample.com", password: "password", username: Faker::Name.name}
 ]
 
 
