@@ -4,9 +4,16 @@ class VenueAbility
   include CanCan::Ability
 
   def initialize(user)
-    can :read, Venue, :all
+    can :read, Venue, is_active: true
 
     return unless user.present?
-    can :manage, Venue, user: user
+    if user.admin?
+      can :manage, Venue, :all
+    elsif user.moderator?
+      can :manage, Venue, :all
+    elsif user.owner?
+      can :read, Venue, user: user
+      can :manage, Venue, user: user
+    end
   end
 end

@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :venue do
     sequence(:name) { |n| "Venue #{n}" }
-
     is_active { true }
     association :user
 

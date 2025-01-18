@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe VenuesController, type: :controller do
-  let(:user) { create(:user) }
+  let(:user) { create(:owner) }
   let(:venue) { create(:venue, user: user) }
   let(:category) { create(:category) }
 
