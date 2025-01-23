@@ -14,6 +14,9 @@ class Review < ApplicationRecord
 
     validates_associated :rating
 
+    after_save :update_avg_rating
+
+
     def rating_dictionary
         rating_dictionary = {}
         rating_dictionary["Wartość"] = self.rating.value_rating
@@ -35,5 +38,10 @@ class Review < ApplicationRecord
         total += self.rating.uniqueness_rating
         total += self.rating.value_rating
         (total / 6.0).round(2)
+    end
+    private
+
+    def update_avg_rating
+        update_column(:avg_rating, rating.avg_rating) if rating
     end
 end

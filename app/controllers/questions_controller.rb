@@ -15,7 +15,7 @@ class QuestionsController < ApplicationController
             @question.destroy
             redirect_to venue_path(@venue)
         else
-            redirect_to venue_path(@venue), notice: "You can't delete this comment"
+            redirect_to venue_path(@venue), error: "You can't delete this comment"
         end
     end
 

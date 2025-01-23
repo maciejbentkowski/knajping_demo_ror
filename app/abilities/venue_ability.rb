@@ -8,9 +8,9 @@ class VenueAbility
 
     return unless user.present?
     if user.admin?
-      can :manage, Venue, :all
+      can :manage, Venue
     elsif user.moderator?
-      can :manage, Venue, :all
+      can :manage, Venue
     elsif user.owner?
       can :read, Venue, user: user
       can :manage, Venue, user: user

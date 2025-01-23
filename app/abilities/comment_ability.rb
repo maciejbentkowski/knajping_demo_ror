@@ -4,11 +4,17 @@ class CommentAbility
   include CanCan::Ability
 
   def initialize(user)
-      return unless user
+      can :read, Comment
 
-      can :create, Comment
+      return unless user.present?
 
-
-      can :destroy, Comment, user_id: user.id
+      if user.admin?
+        can :manage, Comment
+      elsif user.moderator?
+        can :manage, Comment
+      else
+        can :create, Comment
+        can :destroy, Comment, user_id: user.id
+      end
     end
 end

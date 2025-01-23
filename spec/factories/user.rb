@@ -3,7 +3,7 @@ FactoryBot.define do
     sequence(:username) { |n| "Username#{n}" }
     sequence(:email) { |n| "User#{n}@sample.com" }
     password { "password" }
-    role { :user }
+    role { :reviewer }
 
     trait :admin do
       role { :admin }
@@ -17,8 +17,8 @@ FactoryBot.define do
       role { :owner }
     end
 
-    factory :admin, traits: [:admin]
-    factory :moderator, traits: [:moderator]
-    factory :owner, traits: [:owner]
+    factory :admin, traits: [ :admin ]
+    factory :moderator, traits: [ :moderator ]
+    factory :owner, traits: [ :owner ]
   end
 end

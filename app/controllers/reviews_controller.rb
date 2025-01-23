@@ -1,65 +1,101 @@
 class ReviewsController < ApplicationController
-    before_action :set_venue
-    before_action :set_review, only: [ :edit, :update ]
     before_action :authenticate_user!, except: [ :show ]
-    before_action :check_if_user_is_owner, only: [ :new, :create, :edit, :update ]
+    before_action :set_venue
+    before_action :set_review, only: [ :show, :edit, :update ]
 
     def show
-        @review = Review.find(params[:id])
-        @comment = Comment.new
+      @comment = Comment.new
     end
 
     def new
-        @review = @venue.reviews.find_by(user: current_user)
-        if @review
-            redirect_to edit_venue_review_path(@venue, @review)
-        else
-            @review = @venue.reviews.new
-            @review.build_rating
-        end
+      # Check if user is the venue owner
+      if @venue.user == current_user
+        redirect_to venue_path(@venue), alert: "You cannot review your own venue."
+        return
+      end
+
+      # Check for existing review
+      if existing_review = @venue.reviews.find_by(user: current_user)
+        redirect_to edit_venue_review_path(@venue, existing_review),
+          notice: "You already have a review for this venue. You can edit it instead."
+        return
+      end
+
+      @review = @venue.reviews.new
+      @review.build_rating
+      authorize! :new, @review
     end
 
     def create
-        @review = Review.new(review_params.merge(user_id: current_user.id, venue_id: @venue.id))
-        if @review.save
-            @review.update(avg_rating: @review.rating.avg_rating) # Calculate avg_rating after saving
-            redirect_to venue_path(@venue)
-        else
-            render :new
-        end
+      if @venue.user == current_user
+        redirect_to venue_path(@venue), alert: "You cannot review your own venue."
+        return
+      end
+
+      @review = @venue.reviews.build(review_params)
+      @review.user = current_user
+      authorize! :create, @review
+
+      if @review.save
+        redirect_to venue_path(@venue), notice: "Review was successfully created."
+      else
+        @review.build_rating unless @review.rating
+        render :new, status: :unprocessable_entity
+      end
     end
 
     def edit
-        @review.build_rating(@review.rating) unless @review.rating
+      # First check if the review exists and belongs to the current user
+      unless @review && @review.user == current_user
+        redirect_to venue_path(@venue), alert: "You can only edit your own reviews."
+        return
+      end
+
+      @review.build_rating unless @review.rating
     end
 
     def update
-        if @review.update(review_params)
-          redirect_to @venue, notice: "Review was successfully updated."
-        else
-          render :edit
-        end
+      # First check if the review exists and belongs to the current user
+      unless @review && @review.user == current_user
+        redirect_to venue_path(@venue), alert: "You can only edit your own reviews."
+        return
+      end
+
+      if @review.update(review_params)
+        redirect_to venue_path(@venue), notice: "Review was successfully updated."
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
 
     private
+
+    def current_ability
+        @current_ability ||= ::ReviewAbility.new(current_user)
+    end
+
     def set_venue
-        @venue = Venue.find(params[:venue_id])
+      @venue = Venue.find(params[:venue_id])
     end
 
     def set_review
-        @review = @venue.reviews.find_by(user_id: current_user)
-        unless @review
-          redirect_to new_venue_review_path(@venue)
-        end
+      @review = @venue.reviews.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to venue_path(@venue), alert: "Review not found."
     end
 
     def review_params
-        params.require(:review).permit(:title, :content, rating_attributes: [ :atmosphere_rating, :availability_rating, :quality_rating, :service_rating, :uniqueness_rating, :value_rating ])
-    end
-
-    def check_if_user_is_owner
-        unless @venue.user != current_user
-          redirect_to venue_path(@venue), alert: "Nie możesz recenzować swojej restauracji"
-        end
+      params.require(:review).permit(
+        :title,
+        :content,
+        rating_attributes: [
+          :atmosphere_rating,
+          :availability_rating,
+          :quality_rating,
+          :service_rating,
+          :uniqueness_rating,
+          :value_rating
+        ]
+      )
     end
 end

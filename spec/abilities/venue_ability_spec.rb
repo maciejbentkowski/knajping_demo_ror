@@ -47,11 +47,10 @@ RSpec.describe VenueAbility do
       it { is_expected.not_to be_able_to(:update, others_inactive_venue) }
       it { is_expected.not_to be_able_to(:destroy, others_inactive_venue) }
     end
-
   end
 
   context 'when user is a owner' do
-    let (:user) {create(:owner)}
+    let (:user) { create(:owner) }
     let(:own_active_venue) { create(:venue, user: user, is_active: true) }
     let(:own_inactive_venue) { create(:venue, user: user, is_active: false) }
 
@@ -78,7 +77,7 @@ RSpec.describe VenueAbility do
 
   context 'when user is a moderator' do
     let(:user) { create(:moderator) }
-    let(:own_venue) {create(:venue, user: user)}
+    let(:own_venue) { create(:venue, user: user) }
 
     include_examples "can read all venues regardless of status"
 
@@ -95,7 +94,7 @@ RSpec.describe VenueAbility do
 
   context 'when user is an admin' do
     let(:user) { create(:admin) }
-    let(:own_venue) {create(:venue, user: user)}
+    let(:own_venue) { create(:venue, user: user) }
 
 
     include_examples "can read all venues regardless of status"

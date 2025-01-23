@@ -197,7 +197,7 @@
                             <%= answer.content%>
                           </p>
                         </div>
-                        <%if current_user == answer.user %>
+                        <%if current_user == answer.user || (current_user && current_user.admin?) || (current_user && current_user.moderator?) %>
                           <div class="col-span-1  text-center ">
                             <button class="btn btn-md bg-red-600">
                               <%= link_to 'Usuń' , venue_question_answer_path(@venue, answer.question, answer), form_class: "block px-6",

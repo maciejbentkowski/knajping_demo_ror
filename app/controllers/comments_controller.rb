@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+    load_and_authorize_resource
     before_action :authenticate_user!
     before_action :set_review, only: [ :create, :destroy ]
     before_action :set_comment, only: :destroy
@@ -17,16 +18,13 @@ class CommentsController < ApplicationController
     end
 
     def destroy
-        authorize! :destroy, @comment
-
         @venue = @comment.review.venue
         @review = @comment.review
-        if @comment.user == current_user
-            @comment.destroy
-            redirect_to venue_review_path(@venue, @comment.review)
-        else
-            redirect_to venue_review_path(@venue, @comment.review), notice: "You can't delete this comment"
-        end
+        @comment.destroy
+        redirect_to venue_review_path(@venue, @comment.review)
+        rescue CanCan::AccessDenied
+            redirect_to venue_review_path(@venue, @comment.review),
+                        notice: "You don't have permission to delete this comment"
     end
 
     private
