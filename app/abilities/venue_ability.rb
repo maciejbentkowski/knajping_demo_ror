@@ -7,13 +7,15 @@ class VenueAbility
     can :read, Venue, is_active: true
 
     return unless user.present?
-    if user.admin?
-      can :manage, Venue
-    elsif user.moderator?
-      can :manage, Venue
-    elsif user.owner?
+
+    if user.owner?
       can :read, Venue, user: user
       can :manage, Venue, user: user
     end
+
+    if user.admin? || user.moderator?
+      can :manage, Venue
+    end
+
   end
 end

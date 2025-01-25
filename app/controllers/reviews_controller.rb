@@ -2,6 +2,8 @@ class ReviewsController < ApplicationController
     before_action :authenticate_user!, except: [ :show ]
     before_action :set_venue
     before_action :set_review, only: [ :show, :edit, :update ]
+    load_and_authorize_resource
+
 
     def show
       @comment = Comment.new
@@ -45,13 +47,9 @@ class ReviewsController < ApplicationController
     end
 
     def edit
-      # First check if the review exists and belongs to the current user
-      unless @review && @review.user == current_user
-        redirect_to venue_path(@venue), alert: "You can only edit your own reviews."
-        return
-      end
-
       @review.build_rating unless @review.rating
+      rescue CanCan::AccessDenied
+        redirect_to venue_path(@venue)
     end
 
     def update

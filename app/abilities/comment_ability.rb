@@ -8,13 +8,17 @@ class CommentAbility
 
       return unless user.present?
 
-      if user.admin?
+
+      if user.reviewer?
+        can :manage, Comment, user_id: user.id
+      end
+
+      if user.owner?
+        can :manage, Comment, user_id: user.id
+      end
+
+      if user.admin? || user.moderator?
         can :manage, Comment
-      elsif user.moderator?
-        can :manage, Comment
-      else
-        can :create, Comment
-        can :destroy, Comment, user_id: user.id
       end
     end
 end
