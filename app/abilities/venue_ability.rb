@@ -16,6 +16,5 @@ class VenueAbility
     if user.admin? || user.moderator?
       can :manage, Venue
     end
-
   end
 end

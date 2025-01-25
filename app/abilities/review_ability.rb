@@ -10,7 +10,7 @@ class ReviewAbility
 
     if user.reviewer?
       can :create, Review
-      can [:edit, :update], Review do |review|
+      can [ :edit, :update ], Review do |review|
         review.user_id.to_i == user.id
       end
     end

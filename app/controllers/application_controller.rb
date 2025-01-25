@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
 
   rescue_from CanCan::AccessDenied do |exception|
-    if controller_name == 'reviews'
+    if controller_name == "reviews"
       redirect_to venue_path(params[:venue_id]), alert: "You are not authorized to perform this action."
     else
       redirect_to root_path, alert: exception.message

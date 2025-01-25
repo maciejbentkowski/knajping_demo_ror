@@ -12,12 +12,12 @@ RSpec.describe CommentAbility do
     let(:user) { nil }
     let(:reviewer_user) { create(:user) }
     let(:owner_user) { create(:owner) }
-    let(:other_user) { create(:user)}
+    let(:other_user) { create(:user) }
     let(:first_review) { create(:review, user: reviewer_user) }
     let(:second_review) { create(:review, user: reviewer_user) }
     let(:first_comment) { create(:comment, review: first_review, user: owner_user) }
     let(:second_comment) { create(:comment, review: second_review, user: reviewer_user) }
-    let(:other_user_comment) {create(:comment, review: first_review, user: other_user)}
+    let(:other_user_comment) { create(:comment, review: first_review, user: other_user) }
 
 
     context 'when user is not logged in' do
@@ -28,7 +28,7 @@ RSpec.describe CommentAbility do
 
     context 'when user is a regular reviewer' do
         let(:user) { create(:user) }
-        let(:own_comment) {create(:comment , review: first_review, user: user)}
+        let(:own_comment) { create(:comment, review: first_review, user: user) }
 
         include_examples "can read other users comments"
 
@@ -51,7 +51,7 @@ RSpec.describe CommentAbility do
 
     context 'when user is a owner' do
         let (:user) { create(:owner) }
-        let(:own_comment) {create(:comment , review: second_review, user: user)}
+        let(:own_comment) { create(:comment, review: second_review, user: user) }
 
         include_examples "can read other users comments"
 
@@ -74,7 +74,7 @@ RSpec.describe CommentAbility do
 
   context 'when user is a moderator' do
     let(:user) { create(:moderator) }
-    let(:own_comment) {create(:comment , review: second_review, user: user)}
+    let(:own_comment) { create(:comment, review: second_review, user: user) }
 
     include_examples "can read other users comments"
 
@@ -82,7 +82,7 @@ RSpec.describe CommentAbility do
       it { is_expected.to be_able_to(:create, Comment) }
       it { is_expected.to be_able_to(:edit, own_comment) }
       it { is_expected.to be_able_to(:update, own_comment) }
-      it { is_expected.to be_able_to(:destroy, own_comment)}
+      it { is_expected.to be_able_to(:destroy, own_comment) }
       it { is_expected.to be_able_to(:edit, first_comment) }
       it { is_expected.to be_able_to(:update, first_comment) }
       it { is_expected.to be_able_to(:destroy, first_comment) }
@@ -94,7 +94,7 @@ RSpec.describe CommentAbility do
 
   context 'when user is an admin' do
     let(:user) { create(:admin) }
-    let(:own_comment) {create(:comment , review: second_review, user: user)}
+    let(:own_comment) { create(:comment, review: second_review, user: user) }
 
     include_examples "can read other users comments"
 
@@ -102,7 +102,7 @@ RSpec.describe CommentAbility do
         it { is_expected.to be_able_to(:create, Comment) }
         it { is_expected.to be_able_to(:edit, own_comment) }
         it { is_expected.to be_able_to(:update, own_comment) }
-        it { is_expected.to be_able_to(:destroy, own_comment)}
+        it { is_expected.to be_able_to(:destroy, own_comment) }
         it { is_expected.to be_able_to(:edit, first_comment) }
         it { is_expected.to be_able_to(:update, first_comment) }
         it { is_expected.to be_able_to(:destroy, first_comment) }
