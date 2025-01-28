@@ -10,9 +10,9 @@ RSpec.describe QuestionAbility do
       end
 
     let(:user) { nil }
-    let(:other_user) { create(:user)}
+    let(:other_user) { create(:user) }
     let(:owner_user) { create(:owner) }
-    let(:reviewer_user) {create(:user)}
+    let(:reviewer_user) { create(:user) }
     let(:first_question) { create(:question, user: owner_user) }
     let(:second_question) { create(:question, user: reviewer_user) }
     let(:other_user_question) { create(:question, user: other_user) }
