@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
     before_action :authenticate_user!, only: [ :create, :destroy ]
+    load_and_authorize_resource
 
     def create
         @venue = Venue.find(params[:venue_id])
@@ -20,6 +21,10 @@ class QuestionsController < ApplicationController
     end
 
     private
+
+    def current_ability
+        @current_ability ||= QuestionAbility.new(current_user)
+    end
 
     def question_params
         params.require(:question).permit(:question, :user_id)
