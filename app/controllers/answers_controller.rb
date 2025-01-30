@@ -22,6 +22,9 @@ class AnswersController < ApplicationController
     end
 
     private
+    def current_ability
+        @current_ability ||= AnswerAbility.new(current_user)
+    end
 
     def answer_params
         params.require(:answer).permit(:content, :question_id, :user_id)
