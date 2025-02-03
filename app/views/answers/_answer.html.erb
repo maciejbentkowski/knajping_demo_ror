@@ -1,0 +1,40 @@
+<%= turbo_frame_tag answer do %>
+  <div>
+    <div class="ml-14 mt-2 flex items-center">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+        <div class="w-8 rounded-full">
+          <%= comment_avatar(answer.user)%>
+        </div>
+      </div>
+      <div class=" text-accent">
+        <%=link_to answer.user.username, profile_path(answer.user.id), data: {turbo_frame: "_top"} %>:
+      </div>
+    </div>
+    <%=turbo_frame_tag "#{dom_id(answer)}_content" do %>
+      <div class="grid grid-cols-4 gap-10">
+        <div class="col-span-3 mt-2 ml-24 ">
+          <p class="italic inline bg-accent/10 text-lg">
+            <%= answer.content%>
+          </p>
+        </div>
+        <%if current_user == answer.user || (current_user && current_user.admin?) || (current_user && current_user.moderator?) %>
+          <div class="col-span-1  text-center flex">
+            <div class="block mx-4" >
+              <%= link_to "Edytuj", edit_answer_path(answer), class:"btn btn-md btn-accent"  %>
+            </div>
+            <div class="mx-4">
+              <%= button_to "Delete",
+                    answer_path(answer.id),
+                    method: :delete,
+                    data: {turbo_confirm:"siur?"},
+                    class: "btn btn-md bg-red-600 mx-8" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <%end%>
+    <div class="flex justify-center text-xs text-accent">
+      <%=datetime(answer.created_at)%>
+    </div>
+  </div>
+<% end %>

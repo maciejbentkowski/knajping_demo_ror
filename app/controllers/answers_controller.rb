@@ -1,24 +1,54 @@
 class AnswersController < ApplicationController
-    before_action :authenticate_user!, only: [ :create, :destroy ]
+    load_and_authorize_resource
 
     def create
         @question = Question.find(params[:question_id])
-        @venue = @question.venue
-        @answer = @question.answers.create(answer_params.merge(user_id: current_user.id))
-        redirect_to venue_path(@venue)
+        @answer = @question.answers.build(answer_params.merge(user: current_user))
+
+
+        if @answer.save
+            respond_to do |format|
+                format.turbo_stream {
+                    render turbo_stream: turbo_stream.replace(
+                    helpers.dom_id(@question, :answers),
+                    partial: "answers/answer_list",
+                    locals: { answers: @question.answers }
+                    )
+                }
+                format.html { redirect_to venue_path(@question.venue) } # fallback
+            end
+        else
+            format.html { redirect_to venue_path(@venue), alert: "Could not create answer" }
+        end
     end
 
 
-    def destroy
+    def edit
+        @answer = Answer.find(params[:id])
+    end
+
+    def update
         @answer = Answer.find(params[:id])
         @question = @answer.question
-        @venue = @question.venue
-        if @answer.user == current_user
-            @answer.destroy
-            redirect_to venue_path(@venue)
-        else
-            redirect_to venue_path(@venue), alert: "You can't delete this comment"
+        @answer.update(answer_params)
+
+        respond_to do |format|
+            format.turbo_stream {
+                render turbo_stream: turbo_stream.replace(
+                helpers.dom_id(@question, :answers),
+                partial: "answers/answer_list",
+                locals: { answers: @question.answers }
+                )
+            }
+            format.html { redirect_to venue_path(@question.venue) } # fallback
         end
+    end
+
+    def destroy
+        @answer = Answer.find(params[:id])
+        @answer.destroy!
+
+        render turbo_stream: turbo_stream.remove(helpers.dom_id(@answer))
     end
 
     private
@@ -27,6 +57,6 @@ class AnswersController < ApplicationController
     end
 
     def answer_params
-        params.require(:answer).permit(:content, :question_id, :user_id)
+        params.require(:answer).permit(:content)
     end
 end

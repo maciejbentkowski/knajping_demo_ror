@@ -1,0 +1,24 @@
+<h1>Edit answer</h1>
+<%= turbo_frame_tag "#{dom_id(@answer)}_content" do %>
+  <%= form_with(model:[@answer], data:{turbo_frame: "answers"}) do |f| %>
+    <div class="grid grid-cols-4 gap-10">
+      <div class="col-span-3" >
+        <label class="form-control ml-24">
+          <%= f.text_field :content, class:"input input-bordered bg-white" %>
+        </label>
+      </div>
+      <div class="col-span-1">
+        <div class="col-span-1  text-center flex">
+          <div>
+            <%= link_to :back, class: "btn btn-md bg-red-600 mx-8" do %>
+              Cofnij
+            <% end %>
+          </div>
+          <div>
+            <%= f.submit "Edytuj", class: "btn btn-accent btn-md" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
