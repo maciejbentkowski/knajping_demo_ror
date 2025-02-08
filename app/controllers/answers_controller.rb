@@ -10,15 +10,15 @@ class AnswersController < ApplicationController
             respond_to do |format|
                 format.turbo_stream {
                     render turbo_stream: turbo_stream.replace(
-                    helpers.dom_id(@question, :answers),
-                    partial: "answers/answer_list",
-                    locals: { answers: @question.answers }
+                    helpers.dom_id(@question),
+                    partial: "questions/question",
+                    locals: { question: @question }
                     )
                 }
                 format.html { redirect_to venue_path(@question.venue) } # fallback
             end
         else
-            format.html { redirect_to venue_path(@venue), alert: "Could not create answer" }
+            format.html { redirect_to venue_path(@question.venue), alert: "Nie mozesz odpowiedzieć" }
         end
     end
 
@@ -35,9 +35,9 @@ class AnswersController < ApplicationController
         respond_to do |format|
             format.turbo_stream {
                 render turbo_stream: turbo_stream.replace(
-                helpers.dom_id(@question, :answers),
-                partial: "answers/answer_list",
-                locals: { answers: @question.answers }
+                helpers.dom_id(@answer),
+                partial: "answers/answer",
+                locals: { answer: @answer }
                 )
             }
             format.html { redirect_to venue_path(@question.venue) } # fallback

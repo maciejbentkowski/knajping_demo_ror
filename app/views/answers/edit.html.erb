@@ -1,10 +1,10 @@
 <h1>Edit answer</h1>
 <%= turbo_frame_tag "#{dom_id(@answer)}_content" do %>
-  <%= form_with(model:[@answer], data:{turbo_frame: "answers"}) do |f| %>
+  <%= form_with(model:[@answer]) do |f| %>
     <div class="grid grid-cols-4 gap-10">
       <div class="col-span-3" >
-        <label class="form-control ml-24">
-          <%= f.text_field :content, class:"input input-bordered bg-white" %>
+        <label class="form-control ml-24 min-h-fit">
+          <%= f.text_field :content, class:"input input-bordered bg-white " %>
         </label>
       </div>
       <div class="col-span-1">
