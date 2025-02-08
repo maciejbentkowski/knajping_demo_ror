@@ -1,7 +1,7 @@
 class Question < ApplicationRecord
     belongs_to :venue
     belongs_to :user
-    has_many :answers, dependent: :destroy
+    has_many :answers, -> { order(created_at: :asc) }, dependent: :destroy
 
     validates :question, presence: true,
             length: { maximum: 255 }

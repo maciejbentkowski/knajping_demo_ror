@@ -1,0 +1,11 @@
+<%= form_with(url: venue_questions_path(venue)) do |f| %>
+  <label class="form-control w-full">
+    <div class="label">
+      <%= f.label "Pytania o lokal:", class:"label-text text-sm font-medium" %>
+    </div>
+    <%= f.text_field :question, name: 'question[question]', class:"input input-bordered w-full bg-white " %>
+  </label>
+  <div class=" py-2 block">
+    <%= f.submit "Zapytaj", class: "btn btn-accent btn-wide btn-xs md:btn-sm lg:btn-md " %>
+  </div>
+<% end %>

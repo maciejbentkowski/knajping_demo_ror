@@ -1,23 +1,54 @@
 class QuestionsController < ApplicationController
-    before_action :authenticate_user!, only: [ :create, :destroy ]
     load_and_authorize_resource
 
     def create
         @venue = Venue.find(params[:venue_id])
         @question = @venue.questions.create(question_params.merge(user_id: current_user.id))
-        redirect_to venue_path(@venue)
+
+        if @question.save
+            respond_to do |format|
+                format.turbo_stream {
+                    render turbo_stream: turbo_stream.replace(
+                    "questions_section",
+                    partial: "questions/questions",
+                    locals: { venue: @venue }
+                    )
+                }
+                format.html { redirect_to venue_path(@question.venue) } # fallback
+            end
+        else
+            respond_to do |format|
+                format.html { redirect_to venue_path(@venue), alert: "Could not create question" }
+            end
+        end
+    end
+
+    def edit
+        @question = Question.find(params[:id])
+    end
+
+    def update
+        @question = Question.find(params[:id])
+        @question.update(question_params)
+
+        respond_to do |format|
+            format.turbo_stream {
+                render turbo_stream: turbo_stream.replace(
+                helpers.dom_id(@question),
+                partial: "questions/question",
+                locals: { question: @question }
+                )
+            }
+            format.html { redirect_to venue_path(@question.venue) } # fallback
+        end
     end
 
 
     def destroy
         @question = Question.find(params[:id])
-        @venue = @question.venue
-        if @question.user == current_user
-            @question.destroy
-            redirect_to venue_path(@venue)
-        else
-            redirect_to venue_path(@venue), error: "You can't delete this comment"
-        end
+
+        @question.destroy!
+        render turbo_stream: turbo_stream.remove(helpers.dom_id(@question))
     end
 
     private

@@ -1,0 +1,13 @@
+<% if question.present? %>
+  <%= form_with(url: question_answers_path(question)) do |f| %>
+    <label class="form-control w-full">
+      <div class="label">
+        <%= f.label "Odpowiedz:", class:"label-text text-sm font-medium" %>
+      </div>
+      <%= f.text_field :content, name: 'answer[content]', class:"input input-bordered bg-white" %>
+    </label>
+    <div class="py-2 block">
+      <%= f.submit "Odpowiedz", class: "btn btn-accent btn-wide btn-xs md:btn-sm lg:btn-md" %>
+    </div>
+  <% end %>
+<% end %>
