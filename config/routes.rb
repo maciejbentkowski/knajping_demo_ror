@@ -11,13 +11,13 @@ Rails.application.routes.draw do
       delete :remove_photo
       delete :remove_primary_photo
     end
-    resources :questions, only: [ :create]
+    resources :questions, only: [ :create ]
     resources :reviews do
       resources :comments, only: [ :create, :destroy ]
     end
   end
 
-  resources :questions, only: [:destroy] do
+  resources :questions, only: [ :destroy ] do
     resources :answers, only: [ :create ]
   end
 
