@@ -17,22 +17,22 @@
             <%= answer.content%>
           </p>
         </div>
-        <%if current_user == answer.user || (current_user && current_user.admin?) || (current_user && current_user.moderator?) %>
-          <div class="col-span-1  text-center flex">
-            <div class="block mx-4" >
+        <div class="col-span-1  text-center flex">
+          <%if current_user == answer.user || (current_user && current_user.admin?) || (current_user && current_user.moderator?) %>
+            <div class="block mx-2" >
               <%= link_to "Edytuj", edit_answer_path(answer), class:"btn btn-md btn-accent"  %>
             </div>
-            <div class="mx-4">
+            <div class="mx-2">
               <%= button_to "Delete",
                     answer_path(answer.id),
                     method: :delete,
-                    data: {turbo_confirm:"siur?"},
+                    data: {turbo_confirm:"Jesteś pewien ze chcesz usunąć tę odpowiedź?"},
                     class: "btn btn-md bg-red-600 mx-8" %>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
-    <%end%>
+    <% end %>
     <div class="flex justify-center text-xs text-accent">
       <%=datetime(answer.created_at)%>
     </div>

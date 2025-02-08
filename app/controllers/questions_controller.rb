@@ -23,6 +23,26 @@ class QuestionsController < ApplicationController
         end
     end
 
+    def edit
+        @question = Question.find(params[:id])
+    end
+
+    def update
+        @question = Question.find(params[:id])
+        @question.update(question_params)
+
+        respond_to do |format|
+            format.turbo_stream {
+                render turbo_stream: turbo_stream.replace(
+                helpers.dom_id(@question),
+                partial: "questions/question",
+                locals: { question: @question }
+                )
+            }
+            format.html { redirect_to venue_path(@question.venue) } # fallback
+        end
+    end
+
 
     def destroy
         @question = Question.find(params[:id])
